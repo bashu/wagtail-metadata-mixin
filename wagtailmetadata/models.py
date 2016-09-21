@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+from meta import settings as meta_settings
 from meta_mixin.models import ModelMeta
 
 
@@ -21,14 +22,17 @@ class MetadataMixin(ModelMeta):
         'twitter_description': 'get_meta_description',
         'gplus_description': 'get_meta_description',
         'keywords': 'get_meta_keywords',
-        # 'image': settings.DEFAULT_IMAGE,
         # 'og_app_id': settings.FB_APPID,
         # 'og_profile_id': settings.FB_PROFILE_ID,
         # 'og_publisher': settings.FB_PUBLISHER,
+        'og_author': 'get_author_name',
+        'og_author_url': 'get_author_url',
         # 'fb_pages': settings.FB_PAGES,
         # 'twitter_type': settings.TWITTER_TYPE,
         # 'twitter_site': settings.TWITTER_SITE,
+        'twitter_author': 'get_author_twitter',
         # 'gplus_type': settings.GPLUS_TYPE,
+        'gplus_author': 'get_author_gplus',
         # 'gplus_publisher': settings.GPLUS_PUBLISHER,
         'published_time': 'published_time',
         'modified_time': 'latest_revision_created_at',
@@ -48,6 +52,9 @@ class MetadataMixin(ModelMeta):
 
     def get_author(self):
         author = super(MetadataMixin, self).get_author()
+        author.fb_url = meta_settings.FB_AUTHOR_URL
+        author.twitter_profile = meta_settings.TWITTER_AUTHOR
+        author.gplus_profile = meta_settings.GPLUS_AUTHOR
         author.get_full_name = self.owner.get_full_name
         return author
 
