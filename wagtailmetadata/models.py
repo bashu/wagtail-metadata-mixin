@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
 
+from django.db import models
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
+
+from wagtail.wagtailcore.models import Page
+from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from meta_mixin.models import ModelMeta
 
 
-class MetadataPageMixin(ModelMeta):
+class MetadataMixin(ModelMeta):
     context_meta_name = 'meta'
 
     _metadata_default = ModelMeta._metadata_default.copy()
@@ -16,7 +21,7 @@ class MetadataPageMixin(ModelMeta):
         'twitter_description': 'get_meta_description',
         'gplus_description': 'get_meta_description',
         'keywords': 'get_meta_keywords',
-        # 'image': 'search_image',
+        # 'image': settings.DEFAULT_IMAGE,
         # 'og_app_id': settings.FB_APPID,
         # 'og_profile_id': settings.FB_PROFILE_ID,
         # 'og_publisher': settings.FB_PUBLISHER,
@@ -42,7 +47,7 @@ class MetadataPageMixin(ModelMeta):
         return []
 
     def get_author(self):
-        author = super(ModelMeta, self).get_author()
+        author = super(MetadataMixin, self).get_author()
         author.get_full_name = self.owner.get_full_name
         return author
 
@@ -51,6 +56,33 @@ class MetadataPageMixin(ModelMeta):
         return self.go_live_at or self.first_published_at
 
     def get_context(self, request):
-        context = super(MetadataPageMixin, self).get_context(request)
+        context = super(MetadataMixin, self).get_context(request)
         context[self.context_meta_name] = self.as_meta(request)
         return context
+
+
+class MetadataPageMixin(MetadataMixin, Page):
+
+    search_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True, blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
+
+    panels = [
+        ImageChooserPanel('search_image'),
+    ]
+
+    _metadata_default = MetadataMixin._metadata_default.copy()
+    _metadata_default.update({
+        'image': 'get_meta_image',
+    })
+
+    def get_meta_image(self):
+        if self.search_image:
+            return self.search_image.get_rendition('original').url
+        return None
+
+    class Meta:
+        abstract = True
