@@ -36,7 +36,7 @@ def find_version(*parts):
 
 setup(
     name='wagtail-metadata-mixin',
-    version=find_version('wagtailmetada', '__init__.py'),
+    version=find_version('wagtailmetadata', '__init__.py'),
     license='MIT License',
 
     install_requires=[
