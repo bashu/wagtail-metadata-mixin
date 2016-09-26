@@ -89,7 +89,7 @@ class MetadataPageMixin(MetadataMixin, Page):
     def get_meta_image(self):
         if self.search_image:
             return self.search_image.get_rendition('original').url
-        return None
+        return meta_settings.DEFAULT_IMAGE
 
     class Meta:
         abstract = True
