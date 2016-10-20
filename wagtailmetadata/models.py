@@ -23,6 +23,8 @@ class MetadataMixin(ModelMeta):
         'gplus_description': 'get_meta_description',
         'keywords': 'get_meta_keywords',
         'image': 'get_meta_image_url',
+        # 'object_type': settings.DEFAULT_TYPE,
+        # 'og_type': settings.FB_TYPE,
         # 'og_app_id': settings.FB_APPID,
         # 'og_profile_id': settings.FB_PROFILE_ID,
         # 'og_publisher': settings.FB_PUBLISHER,
@@ -41,9 +43,6 @@ class MetadataMixin(ModelMeta):
         'url': 'get_meta_url',
         'locale': getattr(settings, 'LANGUAGE_CODE', 'en_US'),
     })
-
-    def get_meta_url(self):
-        return self.build_absolute_uri(self.full_url)
 
     def get_meta_title(self):
         return self.seo_title or self.title
@@ -64,6 +63,9 @@ class MetadataMixin(ModelMeta):
             return 'summary_large_image'
         else:
             return 'summary'
+
+    def get_meta_url(self):
+        return self.build_absolute_uri(self.full_url)
 
     def get_author(self):
         author = super(MetadataMixin, self).get_author()
