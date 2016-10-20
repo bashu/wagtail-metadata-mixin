@@ -12,6 +12,9 @@ OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages
 .. image:: https://img.shields.io/github/license/bashu/wagtail-metadata-mixin.svg
     :target: https://pypi.python.org/pypi/wagtail-metadata-mixin/
 
+.. image:: https://img.shields.io/travis/bashu/wagtail-metadata-mixin.svg
+    :target: https://travis-ci.org/bashu/wagtail-metadata-mixin/
+             
 Requirements
 ------------
 
