@@ -22,7 +22,7 @@ class MetadataMixin(ModelMeta):
         'twitter_description': 'get_meta_description',
         'gplus_description': 'get_meta_description',
         'keywords': 'get_meta_keywords',
-        'image': 'get_meta_image',
+        'image': 'get_meta_image_url',
         # 'og_app_id': settings.FB_APPID,
         # 'og_profile_id': settings.FB_PROFILE_ID,
         # 'og_publisher': settings.FB_PUBLISHER,
@@ -54,8 +54,16 @@ class MetadataMixin(ModelMeta):
     def get_meta_keywords(self):
         return []
 
-    def get_meta_image(self):
-        return meta_settings.DEFAULT_IMAGE
+    def get_meta_image_url(self):
+        if bool(meta_settings.DEFAULT_IMAGE) is True:
+            return self.build_absolute_uri(meta_settings.DEFAULT_IMAGE)
+        return None
+
+    def get_meta_twitter_type(self):
+        if self.get_meta_image_url() is not None:
+            return 'summary_large_image'
+        else:
+            return 'summary'
 
     def get_author(self):
         author = super(MetadataMixin, self).get_author()
@@ -64,12 +72,6 @@ class MetadataMixin(ModelMeta):
         author.gplus_profile = meta_settings.GPLUS_AUTHOR
         author.get_full_name = self.owner.get_full_name
         return author
-
-    def get_meta_twitter_type(self):
-        if self.get_meta_image() is not None:
-            return 'summary_large_image'
-        else:
-            return 'summary'
 
     @property
     def published_time(self):
@@ -94,10 +96,11 @@ class MetadataPageMixin(MetadataMixin, Page):
         ImageChooserPanel('search_image'),
     ]
 
-    def get_meta_image(self):
+    def get_meta_image_url(self):
         if self.search_image is not None:
-            return self.search_image.get_rendition('original').url
-        return super(MetadataPageMixin, self).get_meta_image()
+            return self.build_absolute_uri(
+                self.search_image.get_rendition('original').url)
+        return super(MetadataPageMixin, self).get_meta_image_url()
 
     class Meta:
         abstract = True
