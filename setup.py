@@ -41,6 +41,7 @@ setup(
 
     install_requires=[
         'django-meta>=1.0',
+        'wagtail',
     ],
     requires=[
         'Django (>=1.4)',
