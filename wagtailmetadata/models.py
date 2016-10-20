@@ -38,9 +38,12 @@ class MetadataMixin(ModelMeta):
         'published_time': 'published_time',
         'modified_time': 'latest_revision_created_at',
         'expiration_time': 'expire_at',
-        'url': 'full_url',
+        'url': 'get_meta_url',
         'locale': getattr(settings, 'LANGUAGE_CODE', 'en_US'),
     })
+
+    def get_meta_url(self):
+        return self.build_absolute_uri(self.full_url)
 
     def get_meta_title(self):
         return self.seo_title or self.title
