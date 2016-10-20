@@ -22,6 +22,7 @@ class MetadataMixin(ModelMeta):
         'twitter_description': 'get_meta_description',
         'gplus_description': 'get_meta_description',
         'keywords': 'get_meta_keywords',
+        'image': 'get_meta_image',
         # 'og_app_id': settings.FB_APPID,
         # 'og_profile_id': settings.FB_PROFILE_ID,
         # 'og_publisher': settings.FB_PUBLISHER,
@@ -49,6 +50,9 @@ class MetadataMixin(ModelMeta):
 
     def get_meta_keywords(self):
         return []
+
+    def get_meta_image(self):
+        return meta_settings.DEFAULT_IMAGE
 
     def get_author(self):
         author = super(MetadataMixin, self).get_author()
@@ -81,15 +85,10 @@ class MetadataPageMixin(MetadataMixin, Page):
         ImageChooserPanel('search_image'),
     ]
 
-    _metadata_default = MetadataMixin._metadata_default.copy()
-    _metadata_default.update({
-        'image': 'get_meta_image',
-    })
-
     def get_meta_image(self):
-        if self.search_image:
+        if self.search_image is not None:
             return self.search_image.get_rendition('original').url
-        return meta_settings.DEFAULT_IMAGE
+        return super(MetadataPageMixin, self).get_meta_image()
 
     class Meta:
         abstract = True
