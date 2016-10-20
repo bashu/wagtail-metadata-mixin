@@ -8,6 +8,7 @@ env:
   - DJANGO_VERSION=1.10
 before_install:
   - pip install -q django==$DJANGO_VERSION
+  - pip install --upgrade pip setuptools
 install:
   - python setup.py develop
 script:
