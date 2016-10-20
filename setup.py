@@ -56,8 +56,13 @@ setup(
     url='https://github.com/bashu/wagtail-metadata-mixin',
     download_url='https://github.com/bashu/wagtail-metadata-mixin/zipball/master',
 
-    packages=find_packages(exclude=('example*',)),
+    packages=find_packages(exclude=('example*', '*.tests*')),
     include_package_data=True,
+
+    tests_require=[
+        'django-setuptest',
+    ],
+    test_suite='setuptest.setuptest.SetupTestSuite',
 
     zip_safe=False,
     classifiers=[
