@@ -44,7 +44,7 @@ setup(
         'wagtail',
     ],
     requires=[
-        'Django (>=1.4)',
+        'Django (>=1.8.1)',
     ],
 
     description='OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages',
