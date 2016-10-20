@@ -1,0 +1,3 @@
+django
+django-meta>=1.0
+wagtail
