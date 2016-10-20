@@ -29,7 +29,7 @@ class MetadataMixin(ModelMeta):
         'og_author': 'get_author_name',
         'og_author_url': 'get_author_url',
         # 'fb_pages': settings.FB_PAGES,
-        # 'twitter_type': settings.TWITTER_TYPE,
+        'twitter_type': 'get_meta_twitter_type',
         # 'twitter_site': settings.TWITTER_SITE,
         'twitter_author': 'get_author_twitter',
         # 'gplus_type': settings.GPLUS_TYPE,
@@ -61,6 +61,12 @@ class MetadataMixin(ModelMeta):
         author.gplus_profile = meta_settings.GPLUS_AUTHOR
         author.get_full_name = self.owner.get_full_name
         return author
+
+    def get_meta_twitter_type(self):
+        if self.get_meta_image() is not None:
+            return 'summary_large_image'
+        else:
+            return 'summary'
 
     @property
     def published_time(self):
