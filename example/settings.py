@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
 
     'taggit',
     'modelcluster',
@@ -51,6 +50,7 @@ INSTALLED_APPS = [
     'wagtail.wagtailadmin',
     'wagtail.wagtailusers',
     'wagtail.wagtailimages',
+    'wagtail.wagtailsites',
 
     'meta',
     'wagtailmetadata',
@@ -70,8 +70,6 @@ MIDDLEWARE_CLASSES = [
 ]
 
 ROOT_URLCONF = 'example.urls'
-
-SITE_ID = 1
 
 TEMPLATES = [
     {
@@ -129,21 +127,16 @@ MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
 
-META_SITE_NAME = 'Wagtail Metadata Mixin'
-META_SITE_PROTOCOL = 'http'
-META_USE_SITES = True
+# Meta settings
+
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
-META_USE_FACEBOOK_PROPERTIES = True
 META_USE_GOOGLEPLUS_PROPERTIES = True
 
-META_FB_AUTHOR_URL = 'https://facebook.com/foo.bar'
-META_FB_PUBLISHER = 'https://facebook.com/foo.blag'
-META_TWITTER_AUTHOR = '@FooBar'
 META_TWITTER_SITE = '@FooBlag'
-META_GPLUS_AUTHOR = '+FooBar'
 META_GPLUS_PUBLISHER = '+FooPub'
+META_FB_PUBLISHER = 'https://facebook.com/foo.blag'
 
 META_USE_TITLE_TAG = True
 
-WAGTAIL_SITE_NAME = META_SITE_NAME
+WAGTAIL_SITE_NAME = 'Wagtail Metadata Mixin'

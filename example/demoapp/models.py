@@ -12,4 +12,6 @@ class PageBase(type(BasePage)):
 
 class Page(six.with_metaclass(PageBase, MetadataPageMixin, BasePage)):
 
+    object_type = 'Article'
+
     promote_panels = BasePage.promote_panels + MetadataPageMixin.panels
