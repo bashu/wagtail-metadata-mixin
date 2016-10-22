@@ -4,7 +4,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
-from wagtail.wagtailcore.models import Page
+from wagtail.wagtailcore.models import Page, Site
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
 from meta import settings as meta_settings
@@ -14,35 +14,48 @@ from meta_mixin.models import ModelMeta
 class MetadataMixin(ModelMeta):
     context_meta_name = 'meta'
 
-    _metadata_default = ModelMeta._metadata_default.copy()
-    _metadata_default.update({
+    object_type = None
+    custom_namespace = None
+
+    _metadata_default = {
         'title': 'get_meta_title',
         'description': 'get_meta_description',
-        'og_description': 'get_meta_description',
-        'twitter_description': 'get_meta_description',
-        'gplus_description': 'get_meta_description',
         'keywords': 'get_meta_keywords',
-        'image': 'get_meta_image_url',
-        # 'object_type': settings.DEFAULT_TYPE,
-        # 'og_type': settings.FB_TYPE,
-        # 'og_app_id': settings.FB_APPID,
-        # 'og_profile_id': settings.FB_PROFILE_ID,
-        # 'og_publisher': settings.FB_PUBLISHER,
-        'og_author': 'get_author_name',
-        'og_author_url': 'get_author_url',
-        # 'fb_pages': settings.FB_PAGES,
-        'twitter_type': 'get_meta_twitter_type',
-        # 'twitter_site': settings.TWITTER_SITE,
+        'image': 'get_meta_image',
+        'url': 'get_meta_url',
+
+        'object_type': 'get_meta_object_type',
+        'site_name': 'get_meta_site_name',
+
+        'twitter_card': 'get_meta_twitter_card',
+
         'twitter_author': 'get_author_twitter',
-        # 'gplus_type': settings.GPLUS_TYPE,
+        'twitter_site': meta_settings.TWITTER_SITE,
+
         'gplus_author': 'get_author_gplus',
-        # 'gplus_publisher': settings.GPLUS_PUBLISHER,
+        'gplus_publisher': meta_settings.GPLUS_PUBLISHER,
+
+        'og_author': 'get_author_url',
+        'og_publisher': meta_settings.FB_PUBLISHER,
+
+        'facebook_app_id': meta_settings.FB_APPID,
+        'fb_pages': meta_settings.FB_PAGES,
+
         'published_time': 'published_time',
         'modified_time': 'latest_revision_created_at',
         'expiration_time': 'expire_at',
-        'url': 'get_meta_url',
-        'locale': getattr(settings, 'LANGUAGE_CODE', 'en_US'),
-    })
+
+        'locale': 'get_meta_locale',
+        'custom_namespace': 'get_meta_custom_namespace',
+
+        'get_domain': 'get_domain',
+    }
+
+    def get_domain(self):
+        request = self.get_request()
+        if request and getattr(request, 'site', None):
+            return request.site.hostname
+        return self.get_site().hostname
 
     def get_meta_title(self):
         return self.seo_title or self.title
@@ -53,19 +66,40 @@ class MetadataMixin(ModelMeta):
     def get_meta_keywords(self):
         return []
 
-    def get_meta_image_url(self):
+    def get_meta_image(self):
+        request = self.get_request()
         if bool(meta_settings.DEFAULT_IMAGE) is True:
-            return self.build_absolute_uri(meta_settings.DEFAULT_IMAGE)
+            if request is not None:
+                return request.build_absolute_uri(meta_settings.DEFAULT_IMAGE)
+            return meta_settings.DEFAULT_IMAGE
         return None
 
-    def get_meta_twitter_type(self):
-        if self.get_meta_image_url() is not None:
+    def get_meta_url(self):
+        request = self.get_request()
+        if request is not None:
+            return request.build_absolute_uri(self.url)
+        return self.full_url
+
+    def get_meta_object_type(self):
+        return self.object_type or meta_settings.SITE_TYPE
+
+    def get_meta_site_name(self):
+        request = self.get_request()
+        if request and getattr(request, 'site', None):
+            return request.site.site_name or getattr(settings, 'WAGTAIL_SITE_NAME', '')
+        return self.get_site().site_name or getattr(settings, 'WAGTAIL_SITE_NAME', '')
+
+    def get_meta_twitter_card(self):
+        if self.get_meta_image() is not None:
             return 'summary_large_image'
         else:
             return 'summary'
 
-    def get_meta_url(self):
-        return self.build_absolute_uri(self.full_url)
+    def get_meta_locale(self):
+        return getattr(settings, 'LANGUAGE_CODE', 'en_US')
+
+    def get_meta_custom_namespace(self):
+        return self.custom_namespace or meta_settings.OG_NAMESPACES
 
     def get_author(self):
         author = super(MetadataMixin, self).get_author()
@@ -74,6 +108,12 @@ class MetadataMixin(ModelMeta):
         author.gplus_profile = meta_settings.GPLUS_AUTHOR
         author.get_full_name = self.owner.get_full_name
         return author
+
+    def get_meta_protocol(self):
+        raise AttributeError  # deprecated
+
+    def build_absolute_uri(self, url):
+        raise AttributeError  # deprecated
 
     @property
     def published_time(self):
@@ -98,11 +138,14 @@ class MetadataPageMixin(MetadataMixin, Page):
         ImageChooserPanel('search_image'),
     ]
 
-    def get_meta_image_url(self):
+    def get_meta_image(self):
+        request = self.get_request()
         if self.search_image is not None:
-            return self.build_absolute_uri(
-                self.search_image.get_rendition('original').url)
-        return super(MetadataPageMixin, self).get_meta_image_url()
+            if request is not None:
+                return request.build_absolute_uri(
+                    self.search_image.get_rendition('original').url)
+            return self.search_image.get_rendition('original').url
+        return super(MetadataPageMixin, self).get_meta_image()
 
     class Meta:
         abstract = True
