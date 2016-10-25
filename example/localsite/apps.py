@@ -40,10 +40,10 @@ class DefaultConfig(AppConfig):
     label = name = 'localsite'
 
     def ready(self):
-        #try:
-        from puput.models import BlogPage
+        try:
+            from puput.models import BlogPage
 
-        post_init.connect(handle_blog_model, sender=BlogPage)
+            post_init.connect(handle_blog_model, sender=BlogPage)
 
-        #except:
-        #    pass  # shit happens
+        except:
+            pass  # shit happens
