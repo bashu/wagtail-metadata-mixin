@@ -14,10 +14,16 @@ from meta_mixin.models import ModelMeta
 class MetadataMixin(ModelMeta):
     context_meta_name = 'meta'
 
+    use_og = meta_settings.OG_PROPERTIES
+    use_use_title_tag = meta_settings.USE_TITLE_TAG
+
     object_type = None
     custom_namespace = None
 
     _metadata_default = {
+        'use_og': 'use_og',
+        'use_title_tag': 'use_title_tag',
+
         'title': 'get_meta_title',
         'description': 'get_meta_description',
         'keywords': 'get_meta_keywords',
