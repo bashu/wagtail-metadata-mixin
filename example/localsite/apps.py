@@ -3,6 +3,7 @@
 from django.apps import AppConfig, apps
 from django.db.models.signals import post_init
 from django.utils.translation import ugettext_lazy as _
+from django.template.defaultfilters import truncatewords
 
 
 def mixin(cls, mixins):
@@ -18,13 +19,14 @@ def handle_blog_model(sender, instance, **kwargs):
     sender = mixin(sender, [MetadataMixin])
 
     def get_meta_description(self):
-        return self.search_description or self.description
+        return self.search_description or truncatewords(self.description, 20)
 
     sender.add_to_class('get_meta_description', get_meta_description)
 
     def get_meta_image(self):
         if self.header_image:
-            return self.build_absolute_uri(self.header_image.get_rendition('fill-800x450').url)
+            return self.build_absolute_uri(
+                self.header_image.get_rendition('fill-800x450').url)
         return None
 
     sender.add_to_class('get_meta_image', get_meta_image)
