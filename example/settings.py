@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 PROJECT_APPS = [
-    'demoapp',
+    'wagtailmetadata',
 ]
 
 INSTALLED_APPS = [
@@ -43,18 +43,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'taggit',
-    'modelcluster',
-
-    'wagtail.wagtailcore',
-    'wagtail.wagtailadmin',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailimages',
-    'wagtail.wagtailsites',
-
     'meta',
-    'wagtailmetadata',
+
+    'localsite',
 ] + PROJECT_APPS
+
+from puput import PUPUT_APPS
+
+INSTALLED_APPS += PUPUT_APPS
 
 MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -67,6 +63,7 @@ MIDDLEWARE_CLASSES = [
     #'django.middleware.security.SecurityMiddleware',
 
     'wagtail.wagtailcore.middleware.SiteMiddleware',
+    'wagtail.wagtailredirects.middleware.RedirectMiddleware',
 ]
 
 ROOT_URLCONF = 'example.urls'
@@ -74,7 +71,9 @@ ROOT_URLCONF = 'example.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates'),
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -100,6 +99,7 @@ DATABASES = {
     }
 }
 
+MIGRATION_MODULES = {'puput': 'example.puput_migrations'}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -125,6 +125,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # trailing slash.
 MEDIA_URL = '/media/'
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 STATIC_URL = '/static/'
 
 # Meta settings
@@ -137,6 +139,6 @@ META_TWITTER_SITE = '@FooBlag'
 META_GPLUS_PUBLISHER = '+FooPub'
 META_FB_PUBLISHER = 'https://facebook.com/foo.blag'
 
-META_USE_TITLE_TAG = True
+WAGTAIL_SITE_NAME = 'Puput Blog'
 
-WAGTAIL_SITE_NAME = 'Wagtail Metadata Mixin'
+PUPUT_ENTRY_MODEL = 'example.abstracts.EntryAbstract'

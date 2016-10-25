@@ -27,5 +27,5 @@ if settings.SERVE_MEDIA:
     ]
 
 urlpatterns += [
-    url(r'', include(wagtail_urls)),
+    url(r'', include('puput.urls')),
 ]
