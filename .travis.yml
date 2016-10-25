@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.4"
+  - "2.7"
+env:
+  - DJANGO_VERSION=1.8.1
+  - DJANGO_VERSION=1.9
+  - DJANGO_VERSION=1.10
+before_install:
+  - pip install -q django==$DJANGO_VERSION
+  - pip install --upgrade pip setuptools
+install:
+  - python setup.py develop
+script:
+  - python setup.py test

@@ -41,9 +41,10 @@ setup(
 
     install_requires=[
         'django-meta>=1.0',
+        'wagtail',
     ],
     requires=[
-        'Django (>=1.4)',
+        'Django (>=1.8.1)',
     ],
 
     description='OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages',
@@ -55,8 +56,13 @@ setup(
     url='https://github.com/bashu/wagtail-metadata-mixin',
     download_url='https://github.com/bashu/wagtail-metadata-mixin/zipball/master',
 
-    packages=find_packages(exclude=('example*',)),
+    packages=find_packages(exclude=('example*', '*.tests*')),
     include_package_data=True,
+
+    tests_require=[
+        'django-setuptest',
+    ],
+    test_suite='setuptest.setuptest.SetupTestSuite',
 
     zip_safe=False,
     classifiers=[
