@@ -33,6 +33,8 @@ First install the module, preferably in a virtual environment. It can be install
 Setup
 =====
 
+Make sure the project is configured for django-meta_.
+
 Then add the following settings:
 
 .. code-block:: python
@@ -41,8 +43,35 @@ Then add the following settings:
         'wagtailmetadata',
     )
 
+and just include ``meta/meta.html`` template in your templates
+
+.. code-block:: html+django
+
+    {% load meta %}
+
+    <html {% meta_namespaces_gplus %}>
+        <head {% meta_namespaces %}>
+            {% include "meta/meta.html" %}
+        </head>
+        <body>...</body>
+    </html>
+
 Usage
 =====
+
+.. code-block:: python
+
+    # models.py
+
+    from django.utils import six
+    from wagtail.wagtailcore.models import Page, PageBase
+
+    from wagtailmetadata.models import MetadataPageMixin
+
+
+    class CustomPage(six.with_metaclass(PageBase, MetadataPageMixin, Page)):
+        promote_panels = Page.promote_panels + MetadataPageMixin.panels
+
 
 Please see ``example`` application. This application is used to manually test the functionalities of this package. This also serves as good example...
 
