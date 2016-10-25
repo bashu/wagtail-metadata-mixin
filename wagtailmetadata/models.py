@@ -67,18 +67,12 @@ class MetadataMixin(ModelMeta):
         return []
 
     def get_meta_image(self):
-        request = self.get_request()
         if bool(meta_settings.DEFAULT_IMAGE) is True:
-            if request is not None:
-                return request.build_absolute_uri(meta_settings.DEFAULT_IMAGE)
-            return meta_settings.DEFAULT_IMAGE
+            return self.build_absolute_uri(meta_settings.DEFAULT_IMAGE)
         return None
 
     def get_meta_url(self):
-        request = self.get_request()
-        if request is not None:
-            return request.build_absolute_uri(self.url)
-        return self.full_url
+        return self.build_absolute_uri(self.url)
 
     def get_meta_object_type(self):
         return self.object_type or meta_settings.SITE_TYPE
@@ -86,8 +80,8 @@ class MetadataMixin(ModelMeta):
     def get_meta_site_name(self):
         request = self.get_request()
         if request and getattr(request, 'site', None):
-            return request.site.site_name or getattr(settings, 'WAGTAIL_SITE_NAME', '')
-        return self.get_site().site_name or getattr(settings, 'WAGTAIL_SITE_NAME', '')
+            return request.site.site_name
+        return self.get_site().site_name
 
     def get_meta_twitter_card(self):
         if self.get_meta_image() is not None:
@@ -113,7 +107,11 @@ class MetadataMixin(ModelMeta):
         raise AttributeError  # deprecated
 
     def build_absolute_uri(self, url):
-        raise AttributeError  # deprecated
+        request = self.get_request()
+        if request is not None:
+            return request.build_absolute_uri(url)
+
+        raise NotImplementedError
 
     @property
     def published_time(self):
@@ -139,12 +137,9 @@ class MetadataPageMixin(MetadataMixin, Page):
     ]
 
     def get_meta_image(self):
-        request = self.get_request()
         if self.search_image is not None:
-            if request is not None:
-                return request.build_absolute_uri(
-                    self.search_image.get_rendition('original').url)
-            return self.search_image.get_rendition('original').url
+            return self.request.build_absolute_uri(
+                self.search_image.get_rendition('fill-800x450').url)
         return super(MetadataPageMixin, self).get_meta_image()
 
     class Meta:
