@@ -18,16 +18,16 @@ def handle_blog_model(sender, instance, **kwargs):
 
     sender = mixin(sender, [MetadataMixin])
 
-    def get_meta_description(self):
-        return self.search_description or truncatewords(self.description, 20)
+    def get_meta_description(cls):
+        return cls.search_description or truncatewords(cls.description, 20)
 
     sender.add_to_class('get_meta_description', get_meta_description)
 
-    def get_meta_image(self):
-        if self.header_image:
-            return self.build_absolute_uri(
-                self.header_image.get_rendition('fill-800x450').url)
-        return None
+    def get_meta_image(cls):
+        if cls.header_image is not None:
+            return cls.build_absolute_uri(
+                cls.header_image.get_rendition('fill-800x450').url)
+        return super(sender, cls).get_meta_image()
 
     sender.add_to_class('get_meta_image', get_meta_image)
 
