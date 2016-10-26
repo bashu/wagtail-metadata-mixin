@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 
 from wagtail.wagtailcore.models import Page, Site
@@ -14,10 +15,16 @@ from meta_mixin.models import ModelMeta
 class MetadataMixin(ModelMeta):
     context_meta_name = 'meta'
 
+    use_og = meta_settings.USE_OG_PROPERTIES
+    use_use_title_tag = meta_settings.USE_TITLE_TAG
+
     object_type = None
     custom_namespace = None
 
     _metadata_default = {
+        'use_og': 'use_og',
+        'use_title_tag': 'use_title_tag',
+
         'title': 'get_meta_title',
         'description': 'get_meta_description',
         'keywords': 'get_meta_keywords',
@@ -28,7 +35,6 @@ class MetadataMixin(ModelMeta):
         'site_name': 'get_meta_site_name',
 
         'twitter_card': 'get_meta_twitter_card',
-
         'twitter_author': 'get_author_twitter',
         'twitter_site': meta_settings.TWITTER_SITE,
 
@@ -55,7 +61,14 @@ class MetadataMixin(ModelMeta):
         request = self.get_request()
         if request and getattr(request, 'site', None):
             return request.site.hostname
-        return self.get_site().hostname
+
+        site = self.get_site()
+        if site is not None:
+            return site.hostname
+
+        if not meta_settings.SITE_DOMAIN:
+            raise ImproperlyConfigured('META_SITE_DOMAIN is not set')
+        return meta_settings.SITE_DOMAIN
 
     def get_meta_title(self):
         return self.seo_title or self.title
@@ -80,14 +93,20 @@ class MetadataMixin(ModelMeta):
     def get_meta_site_name(self):
         request = self.get_request()
         if request and getattr(request, 'site', None):
-            return request.site.site_name
-        return self.get_site().site_name
+            if bool(request.site.site_name) is True:
+                return request.site.site_name
+
+        site = self.get_site()
+        if site is not None:
+            if bool(site.site_name) is True:
+                return site.site_name
+
+        return settings.WAGTAIL_SITE_NAME
 
     def get_meta_twitter_card(self):
         if self.get_meta_image() is not None:
             return 'summary_large_image'
-        else:
-            return 'summary'
+        return 'summary'
 
     def get_meta_locale(self):
         return getattr(settings, 'LANGUAGE_CODE', 'en_US')
@@ -103,13 +122,17 @@ class MetadataMixin(ModelMeta):
         author.get_full_name = self.owner.get_full_name
         return author
 
-    def get_meta_protocol(self):
-        raise AttributeError  # deprecated
-
     def build_absolute_uri(self, url):
         request = self.get_request()
         if request is not None:
             return request.build_absolute_uri(url)
+
+        if url.startswith('http'):
+            return url
+
+        site = self.get_site()
+        if site is not None:
+            return '%s%s' % (site.root_url, url if url.startswith('/') else '/' + url)
 
         raise NotImplementedError
 
@@ -123,7 +146,7 @@ class MetadataMixin(ModelMeta):
         return context
 
 
-class MetadataPageMixin(MetadataMixin, Page):
+class MetadataPageMixin(MetadataMixin):
 
     search_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -138,7 +161,7 @@ class MetadataPageMixin(MetadataMixin, Page):
 
     def get_meta_image(self):
         if self.search_image is not None:
-            return self.request.build_absolute_uri(
+            return self.build_absolute_uri(
                 self.search_image.get_rendition('fill-800x450').url)
         return super(MetadataPageMixin, self).get_meta_image()
 

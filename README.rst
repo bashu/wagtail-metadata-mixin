@@ -4,7 +4,7 @@ wagtail-metadata-mixin
 OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages
 
 .. image:: https://img.shields.io/pypi/v/wagtail-metadata-mixin.svg
-    :target: https://pypi.python.org/pypi/wagtai-metadata-mixin/
+    :target: https://pypi.python.org/pypi/wagtail-metadata-mixin/
 
 .. image:: https://img.shields.io/pypi/dm/wagtail-metadata-mixin.svg
     :target: https://pypi.python.org/pypi/wagtail-metadata-mixin/
