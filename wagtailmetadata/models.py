@@ -146,7 +146,7 @@ class MetadataMixin(ModelMeta):
         return context
 
 
-class MetadataPageMixin(MetadataMixin):
+class MetadataPageMixin(MetadataMixin, models.Model):
 
     search_image = models.ForeignKey(
         'wagtailimages.Image',
