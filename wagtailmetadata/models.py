@@ -14,7 +14,7 @@ from meta_mixin.models import ModelMeta
 class MetadataMixin(ModelMeta):
     context_meta_name = 'meta'
 
-    use_og = meta_settings.OG_PROPERTIES
+    use_og = meta_settings.USE_OG_PROPERTIES
     use_use_title_tag = meta_settings.USE_TITLE_TAG
 
     object_type = None
@@ -34,7 +34,6 @@ class MetadataMixin(ModelMeta):
         'site_name': 'get_meta_site_name',
 
         'twitter_card': 'get_meta_twitter_card',
-
         'twitter_author': 'get_author_twitter',
         'twitter_site': meta_settings.TWITTER_SITE,
 
@@ -144,7 +143,7 @@ class MetadataPageMixin(MetadataMixin, Page):
 
     def get_meta_image(self):
         if self.search_image is not None:
-            return self.request.build_absolute_uri(
+            return self.build_absolute_uri(
                 self.search_image.get_rendition('fill-800x450').url)
         return super(MetadataPageMixin, self).get_meta_image()
 
