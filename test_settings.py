@@ -14,9 +14,9 @@ INSTALLED_APPS = [
     'taggit',
     'modelcluster',
 
-    'wagtail.wagtailcore',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailimages',
+    'wagtail.core',
+    'wagtail.users',
+    'wagtail.images',
 
     'meta',
     'wagtailmetadata',
