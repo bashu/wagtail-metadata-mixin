@@ -38,8 +38,9 @@ class MetadataMixin(ModelMeta):
         'twitter_author': 'get_author_twitter',
         'twitter_site': meta_settings.TWITTER_SITE,
 
-        'gplus_author': 'get_author_gplus',
-        'gplus_publisher': meta_settings.GPLUS_PUBLISHER,
+        # gplus closing in 2019
+        # 'gplus_author': 'get_author_gplus',
+        # 'gplus_publisher': meta_settings.GPLUS_PUBLISHER,
 
         'og_author': 'get_author_url',
         'og_publisher': meta_settings.FB_PUBLISHER,
@@ -162,8 +163,12 @@ class MetadataPageMixin(MetadataMixin, models.Model):
 
     def get_meta_image(self):
         if self.search_image is not None:
+            if hasattr(meta_settings, 'SEARCH_IMAGE_RENDITION'):
+                rend_settings = meta_settings.SEARCH_IMAGE_RENDITION
+            else:
+                rend_settings = 'fill-800x450'
             return self.build_absolute_uri(
-                self.search_image.get_rendition('fill-800x450').url)
+                self.search_image.get_rendition(rend_settings).url)
         return super(MetadataPageMixin, self).get_meta_image()
 
     class Meta:
