@@ -163,8 +163,8 @@ class MetadataPageMixin(MetadataMixin, models.Model):
 
     def get_meta_image(self):
         if self.search_image is not None:
-            if hasattr(meta_settings, 'SEARCH_IMAGE_RENDITION'):
-                rend_settings = meta_settings.SEARCH_IMAGE_RENDITION
+            if hasattr(settings, 'META_SEARCH_IMAGE_RENDITION'):
+                rend_settings = settings.META_SEARCH_IMAGE_RENDITION
             else:
                 rend_settings = 'fill-800x450'
             return self.build_absolute_uri(
