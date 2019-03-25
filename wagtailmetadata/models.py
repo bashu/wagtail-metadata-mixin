@@ -5,8 +5,8 @@ from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 
-from wagtail.wagtailcore.models import Page, Site
-from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.core.models import Page, Site
+from wagtail.images.edit_handlers import ImageChooserPanel
 
 from meta import settings as meta_settings
 from meta_mixin.models import ModelMeta
