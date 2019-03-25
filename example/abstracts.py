@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from django.urls import reverse
 from django.utils.html import strip_tags
-from django.core.urlresolvers import reverse
 from django.template.defaultfilters import truncatewords
 
 from wagtailmetadata.models import MetadataMixin

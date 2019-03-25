@@ -67,6 +67,8 @@ MIDDLEWARE_CLASSES = [
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
+MIDDLEWARE = MIDDLEWARE_CLASSES
+
 ROOT_URLCONF = 'example.urls'
 
 TEMPLATES = [
