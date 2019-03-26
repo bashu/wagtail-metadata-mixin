@@ -132,7 +132,8 @@ class MetadataMixin(ModelMeta):
 
         site = self.get_site()
         if site is not None:
-            return '%s%s' % (site.root_url, url if url.startswith('/') else '/' + url)
+            return ('%s%s' %
+                    (site.root_url, url if url.startswith('/') else '/' + url))
 
         raise NotImplementedError
 
@@ -161,8 +162,12 @@ class MetadataPageMixin(MetadataMixin, models.Model):
 
     def get_meta_image(self):
         if self.search_image is not None:
+            if hasattr(settings, 'META_SEARCH_IMAGE_RENDITION'):
+                rend_settings = settings.META_SEARCH_IMAGE_RENDITION
+            else:
+                rend_settings = 'fill-800x450'
             return self.build_absolute_uri(
-                self.search_image.get_rendition('fill-800x450').url)
+                self.search_image.get_rendition(rend_settings).url)
         return super(MetadataPageMixin, self).get_meta_image()
 
     class Meta:
