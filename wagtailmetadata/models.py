@@ -38,9 +38,8 @@ class MetadataMixin(ModelMeta):
         'twitter_author': 'get_author_twitter',
         'twitter_site': meta_settings.TWITTER_SITE,
 
-        # gplus closing in 2019
-        # 'gplus_author': 'get_author_gplus',
-        # 'gplus_publisher': meta_settings.GPLUS_PUBLISHER,
+        'gplus_author': 'get_author_gplus',
+        'gplus_publisher': meta_settings.GPLUS_PUBLISHER,
 
         'og_author': 'get_author_url',
         'og_publisher': meta_settings.FB_PUBLISHER,
