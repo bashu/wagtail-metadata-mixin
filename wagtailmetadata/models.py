@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from wagtail.core.models import Page, Site
 from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.images import get_image_model_string
 
 from meta import settings as meta_settings
 from meta_mixin.models import ModelMeta
@@ -155,7 +156,7 @@ class MetadataMixin(ModelMeta):
 class MetadataPageMixin(MetadataMixin, models.Model):
 
     search_image = models.ForeignKey(
-        'wagtailimages.Image',
+        get_image_model_string(),
         null=True, blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
