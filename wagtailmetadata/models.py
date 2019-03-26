@@ -15,9 +15,6 @@ from meta_mixin.models import ModelMeta
 class MetadataMixin(ModelMeta):
     context_meta_name = 'meta'
 
-    use_og = meta_settings.USE_OG_PROPERTIES
-    use_use_title_tag = meta_settings.USE_TITLE_TAG
-
     object_type = None
     custom_namespace = None
 
@@ -56,6 +53,18 @@ class MetadataMixin(ModelMeta):
 
         'get_domain': 'get_domain',
     }
+
+    @property
+    def use_og(self):
+        return meta_settings.USE_OG_PROPERTIES
+
+    @property
+    def use_title_tag(self):
+        return meta_settings.USE_TITLE_TAG
+
+    @property
+    def published_time(self):
+        return self.go_live_at or self.first_published_at
 
     def get_domain(self):
         request = self.get_request()
@@ -136,10 +145,6 @@ class MetadataMixin(ModelMeta):
                     (site.root_url, url if url.startswith('/') else '/' + url))
 
         raise NotImplementedError
-
-    @property
-    def published_time(self):
-        return self.go_live_at or self.first_published_at
 
     def get_context(self, request):
         context = super(MetadataMixin, self).get_context(request)
