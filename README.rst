@@ -67,7 +67,7 @@ Usage
     # models.py
 
     from django.utils import six
-    from wagtail.wagtailcore.models import Page, PageBase
+    from wagtail.core.models import Page, PageBase
 
     from wagtailmetadata.models import MetadataPageMixin
 
