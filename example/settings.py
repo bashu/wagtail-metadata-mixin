@@ -134,7 +134,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
 
-# Meta settings
+## Meta settings
 
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
@@ -142,6 +142,12 @@ META_USE_TWITTER_PROPERTIES = True
 META_TWITTER_SITE = '@FooBlag'
 META_FB_PUBLISHER = 'https://facebook.com/foo.blag'
 
-WAGTAIL_SITE_NAME = 'Puput Blog'
+
+## Puput settings
 
 PUPUT_ENTRY_MODEL = 'example.abstracts.EntryAbstract'
+
+
+## Wagtail settings
+
+WAGTAIL_SITE_NAME = 'Puput Blog'
