@@ -45,7 +45,7 @@ setup(
     ],
     requires=[
         # By default, pick the latest stable version of Django that's officially supported by Wagtail.
-        'Django (>2.0,<2.2,!=2.1.2)',
+        'Django (>=2.0,<2.2)',
     ],
 
     description='OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages',
