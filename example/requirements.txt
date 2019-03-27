@@ -1,5 +1,4 @@
-django>=1.10
-django-meta>=1.0
-
-# TODO: replace with puput==0.8 after release
-https://github.com/APSL/puput/archive/master.zip#egg=puput
+django>=2.0,<2.2
+wagtail>1.4,<2.4
+django-meta>1.4
+puput>0.8

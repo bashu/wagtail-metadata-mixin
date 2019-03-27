@@ -1,15 +1,28 @@
+# Config file for automatic testing at travis-ci.org
+dist: xenial
 language: python
+
+sudo: false
 python:
+  - "3.7"
+  - "3.6"
+  - "3.5"
   - "3.4"
-  - "2.7"
 env:
-  - DJANGO_VERSION=1.8.1
-  - DJANGO_VERSION=1.9
-  - DJANGO_VERSION=1.10
+  - DJANGO_VERSION=2.1
+  - DJANGO_VERSION=2.0
+  - DJANGO_VERSION=1.11.17
 before_install:
   - pip install -q django==$DJANGO_VERSION
-  - pip install --upgrade pip setuptools
 install:
   - python setup.py develop
 script:
   - python setup.py test
+matrix:
+  exclude:
+    - python: "3.4"
+      env: DJANGO_VERSION=2.1
+    - python: "2.7"
+      env: DJANGO_VERSION=2.1
+    - python: "2.7"
+      env: DJANGO_VERSION=2.0

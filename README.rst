@@ -3,6 +3,9 @@ wagtail-metadata-mixin
 
 OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages
 
+Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
+`contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
+
 .. image:: https://img.shields.io/pypi/v/wagtail-metadata-mixin.svg
     :target: https://pypi.python.org/pypi/wagtail-metadata-mixin/
 
@@ -49,7 +52,7 @@ and just include ``meta/meta.html`` template in your templates
 
     {% load meta %}
 
-    <html {% meta_namespaces_gplus %}>
+    <html>
         <head {% meta_namespaces %}>
             {% include "meta/meta.html" %}
         </head>
@@ -64,11 +67,11 @@ Usage
     # models.py
 
     from django.utils import six
-    from wagtail.wagtailcore.models import Page, PageBase
+    from wagtail.core.models import Page, PageBase
 
     from wagtailmetadata.models import MetadataPageMixin
 
-
+    # ensure MetadataPageMixin class goes before Page class
     class CustomPage(six.with_metaclass(PageBase, MetadataPageMixin, Page)):
         promote_panels = Page.promote_panels + MetadataPageMixin.panels
 

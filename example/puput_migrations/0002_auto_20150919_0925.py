@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='category',
             name='parent',
-            field=models.ForeignKey(to='puput.Category', related_name='children', null=True, verbose_name='Parent category', blank=True),
+            field=models.ForeignKey(to='puput.Category', related_name='children', null=True, verbose_name='Parent category', blank=True, on_delete=models.SET_NULL),
         ),
         migrations.AlterField(
             model_name='entrypage',
