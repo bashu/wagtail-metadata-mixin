@@ -71,7 +71,7 @@ Usage
 
     from wagtailmetadata.models import MetadataPageMixin
 
-
+    # ensure MetadataPageMixin class goes before Page class
     class CustomPage(six.with_metaclass(PageBase, MetadataPageMixin, Page)):
         promote_panels = Page.promote_panels + MetadataPageMixin.panels
 

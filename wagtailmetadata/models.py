@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.conf import settings
+from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
 
@@ -34,9 +35,9 @@ class MetadataMixin(ModelMeta):
         'object_type': 'get_meta_object_type',
         'site_name': 'get_meta_site_name',
 
+        'twitter_site': 'get_meta_twitter_site',
+        'twitter_creator': 'get_meta_twitter_creator',
         'twitter_card': 'get_meta_twitter_card',
-        'twitter_author': 'get_author_twitter',
-        'twitter_site': meta_settings.TWITTER_SITE,
 
         'og_author': 'get_author_url',
         'og_publisher': meta_settings.FB_PUBLISHER,
@@ -95,16 +96,16 @@ class MetadataMixin(ModelMeta):
 
         return settings.WAGTAIL_SITE_NAME
 
+    def get_meta_twitter_site(self):
+        return meta_settings.TWITTER_SITE
+
+    def get_meta_twitter_creator(self):
+        return self.get_author_twitter()
+
     def get_meta_twitter_card(self):
         if self.get_meta_image() is not None:
             return 'summary_large_image'
         return 'summary'
-
-    def get_author(self):
-        author = super(MetadataMixin, self).get_author()
-        author.fb_url = meta_settings.FB_AUTHOR_URL
-        author.twitter_profile = meta_settings.TWITTER_AUTHOR
-        return author
 
     def get_meta_locale(self):
         return getattr(settings, 'LANGUAGE_CODE', 'en_US')
@@ -119,12 +120,22 @@ class MetadataMixin(ModelMeta):
 
         site = self.get_site()
         if site is not None:
-            return site.hostname
+            if bool(site.hostname) is True:
+                return site.hostname
 
         if not meta_settings.SITE_DOMAIN:
             raise ImproperlyConfigured('META_SITE_DOMAIN is not set')
 
         return meta_settings.SITE_DOMAIN
+
+    def get_author(self):
+        class Author(object):
+            fb_url = meta_settings.FB_AUTHOR_URL
+            twitter_profile = meta_settings.TWITTER_AUTHOR
+
+            def get_full_name(self):  # pragma: no cover
+                return None
+        return Author()
 
     def build_absolute_uri(self, url):
         request = self.get_request()
@@ -194,5 +205,6 @@ class MetadataPageMixin(MetadataMixin, models.Model):
 
     def get_author(self):
         author = super(MetadataPageMixin, self).get_author()
-        author.get_full_name = self.owner.get_full_name
+        if hasattr(self, 'owner') and isinstance(self.owner, get_user_model()):
+            author.get_full_name = self.owner.get_full_name
         return author
