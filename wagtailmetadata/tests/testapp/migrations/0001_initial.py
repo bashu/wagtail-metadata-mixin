@@ -10,8 +10,8 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('wagtailimages', '0021_image_file_hash'),
-        ('wagtailcore', '0040_page_draft_title'),
+        ('wagtailimages', '__latest__'),
+        ('wagtailcore', '__latest__'),
     ]
 
     operations = [
