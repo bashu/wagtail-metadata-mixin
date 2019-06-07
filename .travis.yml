@@ -9,11 +9,18 @@ python:
   - "3.5"
   - "3.4"
 env:
-  - DJANGO_VERSION=2.1
-  - DJANGO_VERSION=2.0
-  - DJANGO_VERSION=1.11.17
+  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.5.1
+  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.4
+  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.5.1
+  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.4
+  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.3
+  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.2.2
+  - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.3
+  - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.2.2
+  - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.1.1
+  - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.0.2
 before_install:
-  - pip install -q django==$DJANGO_VERSION
+  - pip install -q django==$DJANGO_VERSION wagtail==$WAGTAIL_VERSION
 install:
   - python setup.py develop
 script:
@@ -21,8 +28,14 @@ script:
 matrix:
   exclude:
     - python: "3.4"
-      env: DJANGO_VERSION=2.1
-    - python: "2.7"
-      env: DJANGO_VERSION=2.1
-    - python: "2.7"
-      env: DJANGO_VERSION=2.0
+      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.5.1
+    - python: "3.4"
+      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.4
+    - python: "3.4"
+      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.5.1
+    - python: "3.4"
+      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.4  
+    - python: "3.4"
+      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.3
+    - python: "3.4"
+      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.2.2

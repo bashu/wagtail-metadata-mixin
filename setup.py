@@ -40,12 +40,12 @@ setup(
     license='MIT License',
 
     install_requires=[
-        'django-meta>1.4',
-        'wagtail>1.4,<2.4',
+        'django-meta>1.5',
+        'wagtail>1.4,<2.6',
     ],
     requires=[
         # By default, pick the latest stable version of Django that's officially supported by Wagtail.
-        'Django (>=2.0,<2.2)',
+        'Django (>=2.0,<2.3)',
     ],
 
     description='OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages',
