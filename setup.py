@@ -40,7 +40,7 @@ setup(
     license='MIT License',
 
     install_requires=[
-        'django-meta>1.4',
+        'django-meta>1.5',
         'wagtail>1.4,<2.6',
     ],
     requires=[
