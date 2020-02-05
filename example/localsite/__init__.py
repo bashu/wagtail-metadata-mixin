@@ -1,1 +1,1 @@
-default_app_config = 'localsite.apps.DefaultConfig'
+default_app_config = "localsite.apps.DefaultConfig"

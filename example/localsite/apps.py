@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from django.apps import AppConfig, apps
+from django.apps import AppConfig
 from django.db.models.signals import post_init
-from django.utils.translation import ugettext_lazy as _
 from django.template.defaultfilters import truncatewords
 
 
@@ -21,25 +20,22 @@ def handle_blog_model(sender, instance, **kwargs):
     def get_meta_description(cls):
         return cls.search_description or truncatewords(cls.description, 20)
 
-    sender.add_to_class('get_meta_description', get_meta_description)
+    sender.add_to_class("get_meta_description", get_meta_description)
 
     def get_meta_image(cls):
         if cls.header_image is not None:
-            return cls.build_absolute_uri(
-                cls.header_image.get_rendition('fill-800x450').url)
+            return cls.build_absolute_uri(cls.header_image.get_rendition("fill-800x450").url)
         return super(sender, cls).get_meta_image()
 
-    sender.add_to_class('get_meta_image', get_meta_image)
+    sender.add_to_class("get_meta_image", get_meta_image)
 
     sender.object_type = "blog"
 
-    sender._metadata = {
-        'gplus_type': "Blog",
-    }
+    sender._metadata = {"gplus_type": "Blog"}
 
 
 class DefaultConfig(AppConfig):
-    label = name = 'localsite'
+    label = name = "localsite"
 
     def ready(self):
         try:
@@ -47,5 +43,5 @@ class DefaultConfig(AppConfig):
 
             post_init.connect(handle_blog_model, sender=BlogPage)
 
-        except:
+        except:  # noqa
             pass  # shit happens
