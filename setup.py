@@ -38,7 +38,7 @@ setup(
     name="wagtail-metadata-mixin",
     version=find_version("wagtailmetadata", "__init__.py"),
     license="MIT License",
-    install_requires=["django-meta>1.5", "wagtail>1.4,<2.6"],
+    install_requires=["django-meta>1.5", "wagtail>1.4,<=2.8"],
     requires=[
         # By default, pick the latest stable version of Django that's officially supported by Wagtail.
         "Django (>=2.0,<2.3)"
