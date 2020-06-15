@@ -1,4 +1,4 @@
-django>=2.0,<2.2
-wagtail>2.4,<2.6
+django>=2.0,<=3.0
+wagtail>2.4,<=2.9
 django-meta>1.5
 puput>0.8

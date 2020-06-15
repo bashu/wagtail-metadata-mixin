@@ -90,3 +90,13 @@ ENV/
 
 staticfiles
 media
+
+# Pipenv
+Pipfile
+Pipfile.lock
+
+# PyCharm
+.idea
+
+# Example app
+db.sqlite3

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.utils import six
+import six
 
 from wagtail.core.models import Page, PageBase
 from wagtailmetadata.models import MetadataPageMixin

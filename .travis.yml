@@ -4,11 +4,15 @@ language: python
 
 sudo: false
 python:
+  - "3.8"
   - "3.7"
   - "3.6"
   - "3.5"
   - "3.4"
 env:
+  - DJANGO_VERSION=3.0.7 WAGTAIL_VERSION=2.9
+  - DJANGO_VERSION=3.0.7 WAGTAIL_VERSION=2.8
+  - DJANGO_VERSION=3.0.7 WAGTAIL_VERSION=2.7
   - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.8
   - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.7.1
   - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.7
@@ -28,7 +32,7 @@ env:
   - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.5.1
   - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.4
   - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.3
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.2.2
+  - DJANGO_VERSION=2.0.13 WAGTAIL_VERSION=2.7
   - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.3
   - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.2.2
   - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.1.1
@@ -38,9 +42,21 @@ before_install:
 install:
   - python setup.py develop
 script:
-  - python setup.py test
+  - python runtests.py
 matrix:
   exclude:
+    - python: "3.5"
+      env: DJANGO_VERSION=3.0.7 WAGTAIL_VERSION=2.9
+    - python: "3.5"
+      env: DJANGO_VERSION=3.0.7 WAGTAIL_VERSION=2.8
+    - python: "3.5"
+      env: DJANGO_VERSION=3.0.7 WAGTAIL_VERSION=2.7
+    - python: "3.4"
+      env: DJANGO_VERSION=3.0.7 WAGTAIL_VERSION=2.9
+    - python: "3.4"
+      env: DJANGO_VERSION=3.0.7 WAGTAIL_VERSION=2.8
+    - python: "3.4"
+      env: DJANGO_VERSION=3.0.7 WAGTAIL_VERSION=2.7
     - python: "3.4"
       env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.8
     - python: "3.4"
@@ -81,3 +97,5 @@ matrix:
       env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.3
     - python: "3.4"
       env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.2.2
+    - python: "3.4"
+      env: DJANGO_VERSION=2.0.13 WAGTAIL_VERSION=2.7

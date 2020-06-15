@@ -5,6 +5,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY = 'DUMMY_SECRET_KEY'
 
 # Application definition
 
@@ -35,6 +36,8 @@ MIDDLEWARE_CLASSES = [
     "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
+
+MIDDLEWARE = MIDDLEWARE_CLASSES
 
 TEMPLATES = [
     {

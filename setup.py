@@ -38,10 +38,10 @@ setup(
     name="wagtail-metadata-mixin",
     version=find_version("wagtailmetadata", "__init__.py"),
     license="MIT License",
-    install_requires=["django-meta>1.5", "wagtail>1.4,<=2.8"],
+    install_requires=["django-meta>1.5", "wagtail>1.4,<=2.9"],
     requires=[
         # By default, pick the latest stable version of Django that's officially supported by Wagtail.
-        "Django (>=2.0,<2.3)"
+        "Django (>=2.0,<=3.0)"
     ],
     description="OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages",
     long_description=read("README.rst"),
@@ -51,8 +51,6 @@ setup(
     download_url="https://github.com/bashu/wagtail-metadata-mixin/zipball/master",
     packages=find_packages(exclude=("example*", "*.tests*")),
     include_package_data=True,
-    tests_require=["django-setuptest"],
-    test_suite="setuptest.setuptest.SetupTestSuite",
     zip_safe=False,
     classifiers=[
         "Development Status :: 4 - Beta",
