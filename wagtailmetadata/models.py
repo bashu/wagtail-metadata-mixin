@@ -7,6 +7,7 @@ from django.db import models
 
 from meta import settings as meta_settings
 from meta_mixin.models import ModelMeta
+from wagtail.core.models import Site
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
 
@@ -74,11 +75,12 @@ class MetadataMixin(ModelMeta):
 
     def get_meta_site_name(self):
         request = self.get_request()
-        if request and getattr(request, "site", None):
+        site = getattr(request, "site", None)
+        if request and isinstance(site, Site):
             if bool(request.site.site_name) is True:
                 return request.site.site_name
 
-        site = self.get_site()
+        site = Site.find_for_request(request)
         if site is not None:
             if bool(site.site_name) is True:
                 return site.site_name

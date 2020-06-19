@@ -34,15 +34,16 @@ def find_version(*parts):
     raise RuntimeError("Unable to find version string.")
 
 
+requires = [
+    "django-meta>1.5",
+    "wagtail>1.4,<=2.9",
+]
+
 setup(
     name="wagtail-metadata-mixin",
     version=find_version("wagtailmetadata", "__init__.py"),
     license="MIT License",
-    install_requires=["django-meta>1.5", "wagtail>1.4,<=2.9"],
-    requires=[
-        # By default, pick the latest stable version of Django that's officially supported by Wagtail.
-        "Django (>=2.0,<=3.0)"
-    ],
+    install_requires=requires,
     description="OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages",
     long_description=read("README.rst"),
     author="Basil Shubin",
@@ -64,6 +65,11 @@ setup(
         "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Internet :: WWW/HTTP",
         "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
         "Topic :: Software Development :: Libraries :: Python Modules",
