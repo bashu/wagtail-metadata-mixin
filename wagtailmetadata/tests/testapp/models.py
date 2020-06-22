@@ -1,10 +1,7 @@
 # -*- coding: utf-8 -*-
-
-import six
-
-from wagtail.core.models import Page, PageBase
+from wagtail.core.models import Page
 from wagtailmetadata.models import MetadataPageMixin
 
 
-class SimplePage(six.with_metaclass(PageBase, MetadataPageMixin, Page)):
+class SimplePage(MetadataPageMixin, Page):
     promote_panels = Page.promote_panels + MetadataPageMixin.panels

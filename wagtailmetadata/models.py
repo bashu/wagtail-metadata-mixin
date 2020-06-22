@@ -80,9 +80,14 @@ class MetadataMixin(ModelMeta):
             if bool(request.site.site_name) is True:
                 return request.site.site_name
 
-        site = Site.find_for_request(request)
-        if site is not None:
+        site = self.get_site()
+        if isinstance(site, Site):
             if bool(site.site_name) is True:
+                return site.site_name
+
+        if request:
+            site = Site.find_for_request(request)
+            if isinstance(site, Site):
                 return site.site_name
 
         return settings.WAGTAIL_SITE_NAME

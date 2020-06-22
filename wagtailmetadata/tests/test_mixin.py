@@ -12,6 +12,7 @@ from wagtailmetadata.tests.testapp.models import SimplePage
 
 
 class TestMetadataPageMixin(TestCase):
+
     def setUp(self):
         self.site = Site.objects.first()
         self.site.site_name = "Example"

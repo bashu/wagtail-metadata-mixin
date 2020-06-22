@@ -26,7 +26,7 @@ INSTALLED_APPS = [
     "meta",
 ] + PROJECT_APPS
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -36,8 +36,6 @@ MIDDLEWARE_CLASSES = [
     "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
-
-MIDDLEWARE = MIDDLEWARE_CLASSES
 
 TEMPLATES = [
     {
