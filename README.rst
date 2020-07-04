@@ -1,3 +1,11 @@
+wagtail-metadata-mixin
+======================
+
+OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages
+
+Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
+`contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
+
 .. image:: https://img.shields.io/pypi/v/wagtail-metadata-mixin.svg
     :target: https://pypi.python.org/pypi/wagtail-metadata-mixin/
 
@@ -10,13 +18,9 @@
 .. image:: https://img.shields.io/travis/bashu/wagtail-metadata-mixin.svg
     :target: https://travis-ci.org/bashu/wagtail-metadata-mixin/
 
-wagtail-metadata-mixin
-======================
 
-OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages
-
-Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
-`contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
+Compatibility
+-------------
 
 The current version is tested for compatiblily with the following:
 
