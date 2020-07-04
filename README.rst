@@ -1,3 +1,11 @@
+wagtail-metadata-mixin
+======================
+
+OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages
+
+Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
+`contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
+
 .. image:: https://img.shields.io/pypi/v/wagtail-metadata-mixin.svg
     :target: https://pypi.python.org/pypi/wagtail-metadata-mixin/
 
@@ -10,25 +18,17 @@
 .. image:: https://img.shields.io/travis/bashu/wagtail-metadata-mixin.svg
     :target: https://travis-ci.org/bashu/wagtail-metadata-mixin/
 
-wagtail-metadata-mixin
-======================
+Requirements
+------------
 
-OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages
-
-Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
-`contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
+You must have *django-meta* installed and configured, see the
+django-meta_ documentation for details and setup instructions.
 
 The current version is tested for compatiblily with the following:
 
 - Wagtail versions 2.0 to 2.8
 - Django versions 1.11 to 3.0
 - Python versions 3.4 to 3.8
-
-Requirements
-------------
-
-You must have *django-meta* installed and configured, see the
-django-meta_ documentation for details and setup instructions.
 
 Installation
 ============
