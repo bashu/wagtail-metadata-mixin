@@ -5,6 +5,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY = 'DUMMY_SECRET_KEY'
 
 # Application definition
 
@@ -25,7 +26,7 @@ INSTALLED_APPS = [
     "meta",
 ] + PROJECT_APPS
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
