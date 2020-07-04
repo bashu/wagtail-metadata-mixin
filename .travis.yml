@@ -1,83 +1,42 @@
 # Config file for automatic testing at travis-ci.org
 dist: xenial
 language: python
-
+cache: pip
 sudo: false
-python:
-  - "3.7"
-  - "3.6"
-  - "3.5"
-  - "3.4"
-env:
-  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.8
-  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.7.1
-  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.7
-  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.6.3
-  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.6.2
-  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.6.1
-  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.6
-  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.5.1
-  - DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.4
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.8
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.7.1
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.7
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.6.3
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.6.2
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.6.1
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.6
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.5.1
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.4
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.3
-  - DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.2.2
-  - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.3
-  - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.2.2
-  - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.1.1
-  - DJANGO_VERSION=1.11.17 WAGTAIL_VERSION=2.0.2
-before_install:
-  - pip install -q django==$DJANGO_VERSION wagtail==$WAGTAIL_VERSION
-install:
-  - python setup.py develop
-script:
-  - python setup.py test
+
 matrix:
-  exclude:
-    - python: "3.4"
-      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.8
-    - python: "3.4"
-      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.7.1
-    - python: "3.4"
-      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.7
-    - python: "3.4"
-      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.6.3
-    - python: "3.4"
-      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.6.2
-    - python: "3.4"
-      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.6.1
-    - python: "3.4"
-      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.6
-    - python: "3.4"
-      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.5.1
-    - python: "3.4"
-      env: DJANGO_VERSION=2.2.2 WAGTAIL_VERSION=2.4
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.8
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.7.1
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.7
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.6.3
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.6.2
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.6.1
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.6
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.5.1
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.4  
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.3
-    - python: "3.4"
-      env: DJANGO_VERSION=2.1.9 WAGTAIL_VERSION=2.2.2
+  include:
+    - env: TOXENV=py34-dj111-wt2
+      python: 3.4
+    - env: TOXENV=py35-dj111-wt2
+      python: 3.5
+    - env: TOXENV=py36-dj111-wt2
+      python: 3.6
+    - env: TOXENV=py37-dj111-wt2
+      python: 3.7
+    - env: TOXENV=py37-dj2-wt21
+      python: 3.7
+    - env: TOXENV=py37-dj2-wt22
+      python: 3.7
+    - env: TOXENV=py37-dj2-wt23
+      python: 3.7
+    - env: TOXENV=py37-dj2-wt24
+      python: 3.7
+    - env: TOXENV=py37-dj21-wt24
+      python: 3.7
+    - env: TOXENV=py37-dj22-wt25
+      python: 3.7
+    - env: TOXENV=py37-dj22-wt26
+      python: 3.7
+    - env: TOXENV=py38-dj22-wt27
+      python: 3.8
+    - env: TOXENV=py38-dj3-wt28
+      python: 3.8
+    - env: TOXENV=py38-dj3-wt29
+      python: 3.8
+
+install:
+  - pip install tox
+
+script:
+  - tox

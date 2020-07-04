@@ -17,12 +17,18 @@ Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
 
 .. image:: https://img.shields.io/travis/bashu/wagtail-metadata-mixin.svg
     :target: https://travis-ci.org/bashu/wagtail-metadata-mixin/
- 
+
 Requirements
 ------------
 
 You must have *django-meta* installed and configured, see the
 django-meta_ documentation for details and setup instructions.
+
+The current version is tested for compatiblily with the following:
+
+- Wagtail versions 2.0 to 2.8
+- Django versions 1.11 to 3.0
+- Python versions 3.4 to 3.8
 
 Installation
 ============
@@ -66,19 +72,13 @@ Usage
 
     # models.py
 
-    from django.utils import six
     from wagtail.core.models import Page, PageBase
 
     from wagtailmetadata.models import MetadataPageMixin
 
     # ensure MetadataPageMixin class goes before Page class
-    class CustomPage(six.with_metaclass(PageBase, MetadataPageMixin, Page)):
+    class CustomPage(MetadataPageMixin, Page):
         promote_panels = Page.promote_panels + MetadataPageMixin.panels
-
-
-Please see ``example`` application. This application is used to manually test the functionalities of this package. This also serves as good example...
-
-You need Django 1.8.1 or above to run that. It might run on older versions but that is not tested.
 
 Contributing
 ------------
