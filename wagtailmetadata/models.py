@@ -60,7 +60,7 @@ class MetadataMixin(ModelMeta):
         return False
 
     def get_meta_keywords(self):
-        return False
+        return []
 
     def get_meta_url(self):
         return False
