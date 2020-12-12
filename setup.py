@@ -35,7 +35,7 @@ def find_version(*parts):
 
 
 requires = [
-    "django-meta>1.5",
+    "django-meta>1.5,<2",
     "wagtail>1.4,<3.0",
 ]
 
