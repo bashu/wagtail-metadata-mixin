@@ -1,7 +1,7 @@
 wagtail-metadata-mixin
 ======================
 
-OpenGraph, Twitter Card and Google+ snippet tags for Wagtail CMS pages
+OpenGraph, Twitter Card and Schema.org snippet tags for Wagtail CMS pages
 
 Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
 `contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
@@ -16,7 +16,7 @@ Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
     :target: https://pypi.python.org/pypi/wagtail-metadata-mixin/
 
 .. image:: https://img.shields.io/travis/bashu/wagtail-metadata-mixin.svg
-    :target: https://travis-ci.org/bashu/wagtail-metadata-mixin/
+    :target: https://travis-ci.com/bashu/wagtail-metadata-mixin/
 
 
 Compatibility
@@ -24,9 +24,9 @@ Compatibility
 
 The current version is tested for compatiblily with the following:
 
-- Wagtail versions 2.0 to 2.8
-- Django versions 1.11 to 3.0
-- Python versions 3.4 to 3.8
+- Wagtail versions 2.7 to 2.11
+- Django versions 2.2 to 3.2
+- Python versions 3.6 and 3.9
 
 Requirements
 ------------
@@ -62,7 +62,7 @@ and just include ``meta/meta.html`` template in your templates
 
     {% load meta %}
 
-    <html>
+    <html {% meta_namespaces_schemaorg %}>
         <head {% meta_namespaces %}>
             {% include "meta/meta.html" %}
         </head>

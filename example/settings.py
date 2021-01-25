@@ -124,6 +124,7 @@ STATIC_URL = "/static/"
 # django-meta
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
+META_USE_SCHEMAORG_PROPERTIES = True
 
 META_TWITTER_SITE = "@FooBlag"
 META_FB_PUBLISHER = "https://facebook.com/foo.blag"
