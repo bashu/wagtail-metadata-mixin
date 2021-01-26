@@ -5,11 +5,13 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 'DUMMY_SECRET_KEY'
+SECRET_KEY = "DUMMY_SECRET_KEY"
+
+INTERNAL_IPS = []
 
 # Application definition
 
-PROJECT_APPS = ["wagtailmetadata.tests.testapp", "wagtailmetadata"]
+PROJECT_APPS = ["wagtailmetadata.tests", "wagtailmetadata"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -40,7 +42,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(os.path.dirname(os.path.abspath(__file__)), "test_templates")],
+        "DIRS": [os.path.join(BASE_DIR, "tests", "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -54,7 +56,7 @@ TEMPLATES = [
     }
 ]
 
-ROOT_URLCONF = "test_urls"
+ROOT_URLCONF = "wagtailmetadata.tests.urls"
 
 
 # Database
@@ -67,13 +69,13 @@ DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memor
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = os.path.join(BASE_DIR, "..", "media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 MEDIA_URL = "/media/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "..", "staticfiles")
 
 STATIC_URL = "/static/"
 

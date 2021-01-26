@@ -1,4 +1,4 @@
-django<3.1,>=2.0
-wagtail<3.0,>=2.7
-django-meta>1.5
-puput>0.8
+django>=2.1.6,<3.1
+wagtail==2.8.2  # https://github.com/wagtail/wagtail
+django-meta>1.7.0  # https://github.com/nephila/django-meta
+puput==1.0.7  # https://github.com/APSL/puput

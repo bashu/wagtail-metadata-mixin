@@ -8,7 +8,7 @@ from meta import settings as meta_settings
 from wagtail.core.models import Site
 from wagtail.images.models import Image
 from wagtail.images.tests.utils import get_test_image_file
-from wagtailmetadata.tests.testapp.models import SimplePage
+from wagtailmetadata.tests.models import SimplePage
 
 
 class TestMetadataPageMixin(TestCase):
@@ -125,6 +125,13 @@ class TestMetadataPageMixin(TestCase):
 
         with self.settings(LANGUAGE_CODE="ru_RU"):
             self.assertEqual(self.page.get_meta_locale(), "ru_RU")
+
+    def test_get_meta_schemaorg_type(self):
+        self.assertEqual(self.page.get_meta_schemaorg_type(), "Article")
+
+        self.page.schemaorg_type = "Page"
+
+        self.assertEqual(self.page.get_meta_schemaorg_type(), "Page")
 
     def test_get_meta_custom_namespace(self):
         self.assertEqual(self.page.get_meta_custom_namespace(), None)

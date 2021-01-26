@@ -6,7 +6,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 
 from meta import settings as meta_settings
-from meta_mixin.models import ModelMeta
+from meta.models import ModelMeta
 from wagtail.core.models import Site
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
@@ -16,11 +16,13 @@ class MetadataMixin(ModelMeta):
     context_meta_name = "meta"
 
     object_type = None
+    schemaorg_type = None
     custom_namespace = None
 
     _metadata_default = {
         "use_og": "use_og",
         "use_twitter": "use_twitter",
+        "use_schemaorg": "use_schemaorg",
         "use_title_tag": "use_title_tag",
         "title": "get_meta_title",
         "description": "get_meta_description",
@@ -37,6 +39,7 @@ class MetadataMixin(ModelMeta):
         "facebook_app_id": meta_settings.FB_APPID,
         "fb_pages": meta_settings.FB_PAGES,
         "locale": "get_meta_locale",
+        "schemaorg_type": "get_meta_schemaorg_type",
         "custom_namespace": "get_meta_custom_namespace",
         "get_domain": "get_domain",
     }
@@ -48,6 +51,10 @@ class MetadataMixin(ModelMeta):
     @property
     def use_twitter(self):
         return meta_settings.USE_TWITTER_PROPERTIES
+
+    @property
+    def use_schemaorg(self):
+        return meta_settings.USE_SCHEMAORG_PROPERTIES
 
     @property
     def use_title_tag(self):
@@ -72,6 +79,9 @@ class MetadataMixin(ModelMeta):
 
     def get_meta_object_type(self):
         return self.object_type or meta_settings.SITE_TYPE
+
+    def get_meta_schemaorg_type(self):
+        return self.schemaorg_type or meta_settings.SCHEMAORG_TYPE
 
     def get_meta_site_name(self):
         request = self.get_request()
@@ -128,6 +138,7 @@ class MetadataMixin(ModelMeta):
         class Author(object):
             fb_url = meta_settings.FB_AUTHOR_URL
             twitter_profile = meta_settings.TWITTER_AUTHOR
+            schemaorg_profile = None
 
             def get_full_name(self):  # pragma: no cover
                 return None

@@ -11,6 +11,7 @@ from wagtailmetadata.models import MetadataMixin
 
 class EntryAbstract(MetadataMixin, puput.EntryAbstract):
     object_type = "article"
+    schemaorg_type = "blog"
 
     _metadata = {
         "published_time": "date",
