@@ -16,7 +16,7 @@ Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
     :target: https://pypi.python.org/pypi/wagtail-metadata-mixin/
 
 .. image:: https://img.shields.io/travis/bashu/wagtail-metadata-mixin.svg
-    :target: https://travis-ci.com/bashu/wagtail-metadata-mixin/
+    :target: https://travis-ci.com/github/bashu/wagtail-metadata-mixin/
 
 Compatibility
 -------------
