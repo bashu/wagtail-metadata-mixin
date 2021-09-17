@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 
-from meta import settings as meta_settings
+from meta import settings as meta_settings, utils
 from meta.models import ModelMeta
 from wagtail.core.models import Site
 from wagtail.images import get_image_model_string
@@ -84,7 +84,7 @@ class MetadataMixin(ModelMeta):
         return self.schemaorg_type or meta_settings.SCHEMAORG_TYPE
 
     def get_meta_site_name(self):
-        request = self.get_request()
+        request = utils.get_request()
         site = getattr(request, "site", None)
         if request and isinstance(site, Site):
             if bool(request.site.site_name) is True:
@@ -120,7 +120,7 @@ class MetadataMixin(ModelMeta):
         return self.custom_namespace or meta_settings.OG_NAMESPACES
 
     def get_domain(self):
-        request = self.get_request()
+        request = utils.get_request()
         if request and getattr(request, "site", None):
             return request.site.hostname
 
@@ -146,7 +146,7 @@ class MetadataMixin(ModelMeta):
         return Author()
 
     def build_absolute_uri(self, url):
-        request = self.get_request()
+        request = utils.get_request()
         if request is not None:
             return request.build_absolute_uri(url)
 
