@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
@@ -135,7 +133,7 @@ class MetadataMixin(ModelMeta):
         return meta_settings.SITE_DOMAIN
 
     def get_author(self):
-        class Author(object):
+        class Author:
             fb_url = meta_settings.FB_AUTHOR_URL
             twitter_profile = meta_settings.TWITTER_AUTHOR
             schemaorg_profile = None
@@ -155,12 +153,12 @@ class MetadataMixin(ModelMeta):
 
         site = self.get_site()
         if site is not None:
-            return "%s%s" % (site.root_url, url if url.startswith("/") else "/" + url)
+            return "{}{}".format(site.root_url, url if url.startswith("/") else "/" + url)
 
         raise NotImplementedError
 
     def get_context(self, request):
-        context = super(MetadataMixin, self).get_context(request)
+        context = super().get_context(request)
         context[self.context_meta_name] = self.as_meta(request)
         return context
 
@@ -203,10 +201,10 @@ class MetadataPageMixin(MetadataMixin, models.Model):
             return self.build_absolute_uri(
                 self.search_image.get_rendition(getattr(settings, "META_SEARCH_IMAGE_RENDITION", "fill-800x450")).url
             )
-        return super(MetadataPageMixin, self).get_meta_image()
+        return super().get_meta_image()
 
     def get_author(self):
-        author = super(MetadataPageMixin, self).get_author()
+        author = super().get_author()
         if hasattr(self, "owner") and isinstance(self.owner, get_user_model()):
             author.get_full_name = self.owner.get_full_name
         return author

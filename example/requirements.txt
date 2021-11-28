@@ -1,4 +1,4 @@
 django==2.2.24
-wagtail==2.8.2  # https://github.com/wagtail/wagtail
+wagtail>2.7,<3.0
 django-meta>1.7.0  # https://github.com/nephila/django-meta
-puput==1.0.7  # https://github.com/APSL/puput
+puput==1.1.1  # https://github.com/APSL/puput

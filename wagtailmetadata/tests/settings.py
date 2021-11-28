@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -25,6 +23,7 @@ INSTALLED_APPS = [
     "wagtail.core",
     "wagtail.users",
     "wagtail.images",
+    "wagtail.admin",
     "meta",
 ] + PROJECT_APPS
 

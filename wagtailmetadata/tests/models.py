@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from wagtail.core.models import Page
 from wagtailmetadata.models import MetadataPageMixin
 
