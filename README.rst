@@ -1,11 +1,6 @@
 wagtail-metadata-mixin
 ======================
 
-OpenGraph, Twitter Card and Schema.org snippet tags for Wagtail CMS pages
-
-Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
-`contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
-
 .. image:: https://img.shields.io/pypi/v/wagtail-metadata-mixin.svg
     :target: https://pypi.python.org/pypi/wagtail-metadata-mixin/
 
@@ -18,24 +13,28 @@ Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
 .. image:: https://img.shields.io/travis/bashu/wagtail-metadata-mixin.svg
     :target: https://travis-ci.com/github/bashu/wagtail-metadata-mixin/
 
+OpenGraph, Twitter Card and Schema.org snippet tags for Wagtail CMS pages
+
+Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
+`contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
+
 Compatibility
--------------
+~~~~~~~~~~~~~
 
 The current version is tested for compatiblily with the following:
 
-- Wagtail versions 2.7 to 2.11
+- Wagtail versions 2.7 to 2.15
 - Django versions 2.2 to 3.2
 - Python versions 3.6 and 3.9
 
 Requirements
-------------
+~~~~~~~~~~~~
 
 You must have *django-meta* installed and configured, see the
 django-meta_ documentation for details and setup instructions.
 
 Installation
-============
-
+------------
 First install the module, preferably in a virtual environment. It can be installed from PyPI:
 
 .. code-block:: shell
@@ -43,7 +42,7 @@ First install the module, preferably in a virtual environment. It can be install
     pip install wagtail-metadata-mixin
 
 Setup
-=====
+-----
 
 Make sure the project is configured for django-meta_.
 
@@ -69,7 +68,7 @@ and just include ``meta/meta.html`` template in your templates
     </html>
 
 Usage
-=====
+-----
 
 .. code-block:: python
 

@@ -1,18 +1,15 @@
-# -*- coding: utf-8 -*-
-
 from django.conf import settings
 from django.test import TestCase
 from django.utils import timezone
-
 from meta import settings as meta_settings
 from wagtail.core.models import Site
 from wagtail.images.models import Image
 from wagtail.images.tests.utils import get_test_image_file
+
 from wagtailmetadata.tests.models import SimplePage
 
 
 class TestMetadataPageMixin(TestCase):
-
     def setUp(self):
         self.site = Site.objects.first()
         self.site.site_name = "Example"

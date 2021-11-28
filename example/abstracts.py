@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
-
 from django.conf import settings
 from django.template.defaultfilters import truncatewords
 from django.urls import reverse
 from django.utils.html import strip_tags
-
 from puput import abstracts as puput
+
 from wagtailmetadata.models import MetadataMixin
 
 
@@ -54,7 +52,7 @@ class EntryAbstract(MetadataMixin, puput.EntryAbstract):
         return None
 
     def get_author(self):
-        author = super(EntryAbstract, self).get_author()
+        author = super().get_author()
         author.get_full_name = self.owner.get_full_name
         return author
 
