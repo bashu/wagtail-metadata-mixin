@@ -13,28 +13,19 @@ wagtail-metadata-mixin
 .. image:: https://img.shields.io/travis/bashu/wagtail-metadata-mixin.svg
     :target: https://travis-ci.com/github/bashu/wagtail-metadata-mixin/
 
-OpenGraph, Twitter Card and Schema.org snippet tags for Wagtail CMS pages
+OpenGraph, Twitter Card and Schema.org snippet tags for Wagtail CMS pages.
+
+The current version is tested for compatiblily with the following:
+
+- Wagtail versions 2.7 to 2.15
+- Django versions 2.2 to 3.2
+- Python versions 3.6 and 3.9
 
 Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
 `contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
 
-Compatibility
-~~~~~~~~~~~~~
-
-The current version is tested for compatiblily with the following:
-
-- Wagtail versions 2.7 to 2.11
-- Django versions 2.2 to 3.2
-- Python versions 3.6 and 3.9
-
-Requirements
-~~~~~~~~~~~~
-
-You must have *django-meta* installed and configured, see the
-django-meta_ documentation for details and setup instructions.
-
 Installation
-============
+------------
 
 First install the module, preferably in a virtual environment. It can be installed from PyPI:
 
@@ -42,10 +33,16 @@ First install the module, preferably in a virtual environment. It can be install
 
     pip install wagtail-metadata-mixin
 
-Setup
-=====
+Requirements
+~~~~~~~~~~~~
 
-Make sure the project is configured for django-meta_.
+You must have *django-meta* installed and configured, see the
+django-meta_ documentation for details and setup instructions.
+
+Setup
+-----
+
+First make sure the project is configured for django-meta_.
 
 Then add the following settings:
 
@@ -69,7 +66,7 @@ and just include ``meta/meta.html`` template in your templates
     </html>
 
 Usage
-=====
+-----
 
 .. code-block:: python
 
@@ -84,7 +81,7 @@ Usage
         promote_panels = Page.promote_panels + MetadataPageMixin.panels
 
 Contributing
-============
+------------
 
 If you like this module, forked it, or would like to improve it, please let us know!
 Pull requests are welcome too. :-)
