@@ -1,12 +1,11 @@
 import datetime
 
 import django.db.models.deletion
-from django.db import migrations, models
-
 import modelcluster.contrib.taggit
 import modelcluster.fields
 import puput.routes
 import wagtail.core.fields
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):

@@ -7,13 +7,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('puput', '0004_auto_20170912_0928'),
+        ("puput", "0004_auto_20170912_0928"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='blogpage',
-            name='main_color',
-            field=colorful.fields.RGBColorField(default='#4D6AE0', verbose_name='Blog Main Color'),
+            model_name="blogpage",
+            name="main_color",
+            field=colorful.fields.RGBColorField(default="#4D6AE0", verbose_name="Blog Main Color"),
         ),
     ]

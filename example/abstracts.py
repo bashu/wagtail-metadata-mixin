@@ -2,8 +2,8 @@ from django.conf import settings
 from django.template.defaultfilters import truncatewords
 from django.urls import reverse
 from django.utils.html import strip_tags
-
 from puput import abstracts as puput
+
 from wagtailmetadata.models import MetadataMixin
 
 

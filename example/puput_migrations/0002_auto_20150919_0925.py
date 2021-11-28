@@ -1,6 +1,5 @@
-from django.db import migrations, models
-
 import wagtail.core.fields
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):

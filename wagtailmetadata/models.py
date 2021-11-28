@@ -2,8 +2,8 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
-
-from meta import settings as meta_settings, utils
+from meta import settings as meta_settings
+from meta import utils
 from meta.models import ModelMeta
 from wagtail.core.models import Site
 from wagtail.images import get_image_model_string

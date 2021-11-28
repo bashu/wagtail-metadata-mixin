@@ -1,8 +1,7 @@
 import re
 
 from django.conf import settings
-from django.urls import include, re_path
-from django.urls import path
+from django.urls import include, path, re_path
 
 urlpatterns = []
 
