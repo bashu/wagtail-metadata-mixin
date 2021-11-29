@@ -13,13 +13,7 @@ wagtail-metadata-mixin
 .. image:: https://img.shields.io/travis/bashu/wagtail-metadata-mixin.svg
     :target: https://travis-ci.com/github/bashu/wagtail-metadata-mixin/
 
-OpenGraph, Twitter Card and Schema.org snippet tags for Wagtail CMS pages
-
-Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
-`contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
-
-Compatibility
-~~~~~~~~~~~~~
+OpenGraph, Twitter Card and Schema.org snippet tags for Wagtail CMS pages.
 
 The current version is tested for compatiblily with the following:
 
@@ -27,24 +21,28 @@ The current version is tested for compatiblily with the following:
 - Django versions 2.2 to 3.2
 - Python versions 3.6 and 3.9
 
-Requirements
-~~~~~~~~~~~~
-
-You must have *django-meta* installed and configured, see the
-django-meta_ documentation for details and setup instructions.
+Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
+`contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
 
 Installation
 ------------
+
 First install the module, preferably in a virtual environment. It can be installed from PyPI:
 
 .. code-block:: shell
 
     pip install wagtail-metadata-mixin
 
+Requirements
+~~~~~~~~~~~~
+
+You must have *django-meta* installed and configured, see the
+django-meta_ documentation for details and setup instructions.
+
 Setup
 -----
 
-Make sure the project is configured for django-meta_.
+First make sure the project is configured for django-meta_.
 
 Then add the following settings:
 
@@ -67,6 +65,8 @@ and just include ``meta/meta.html`` template in your templates
         <body>...</body>
     </html>
 
+Check django-meta_ documentation for more details.
+
 Usage
 -----
 
@@ -80,6 +80,8 @@ Usage
 
     # ensure MetadataPageMixin class goes before Page class
     class CustomPage(MetadataPageMixin, Page):
+        schemaorg_type = "Page"
+
         promote_panels = Page.promote_panels + MetadataPageMixin.panels
 
 Contributing
@@ -89,3 +91,8 @@ If you like this module, forked it, or would like to improve it, please let us k
 Pull requests are welcome too. :-)
 
 .. _django-meta: https://github.com/nephila/django-meta/
+
+License
+-------
+
+``wagtail-embedvideos`` is released under the MIT license.

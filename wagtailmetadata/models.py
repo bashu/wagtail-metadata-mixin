@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 from meta import settings as meta_settings
 from meta import utils
 from meta.models import ModelMeta
@@ -166,7 +167,12 @@ class MetadataMixin(ModelMeta):
 class MetadataPageMixin(MetadataMixin, models.Model):
 
     search_image = models.ForeignKey(
-        get_image_model_string(), null=True, blank=True, on_delete=models.SET_NULL, related_name="+"
+        get_image_model_string(),
+        verbose_name=_("search image"),
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name="+",
     )
 
     panels = [ImageChooserPanel("search_image")]
