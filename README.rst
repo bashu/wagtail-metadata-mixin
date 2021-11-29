@@ -95,4 +95,4 @@ Pull requests are welcome too. :-)
 License
 -------
 
-``wagtail-embedvideos`` is released under the MIT license.
+``wagtail-metadata-mixin`` is released under the MIT license.
