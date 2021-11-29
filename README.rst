@@ -65,6 +65,8 @@ and just include ``meta/meta.html`` template in your templates
         <body>...</body>
     </html>
 
+Check django-meta_ documentation for more details.
+
 Usage
 -----
 
@@ -78,6 +80,8 @@ Usage
 
     # ensure MetadataPageMixin class goes before Page class
     class CustomPage(MetadataPageMixin, Page):
+        schemaorg_type = "Page"
+
         promote_panels = Page.promote_panels + MetadataPageMixin.panels
 
 Contributing
@@ -87,3 +91,8 @@ If you like this module, forked it, or would like to improve it, please let us k
 Pull requests are welcome too. :-)
 
 .. _django-meta: https://github.com/nephila/django-meta/
+
+License
+-------
+
+``wagtail-embedvideos`` is released under the MIT license.
