@@ -6,9 +6,9 @@ from django.utils.translation import gettext_lazy as _
 from meta import settings as meta_settings
 from meta import utils
 from meta.models import ModelMeta
-from wagtail.core.models import Site
+from wagtail.admin.panels import FieldPanel
+from wagtail.models import Site
 from wagtail.images import get_image_model_string
-from wagtail.images.edit_handlers import ImageChooserPanel
 
 
 class MetadataMixin(ModelMeta):
@@ -84,16 +84,6 @@ class MetadataMixin(ModelMeta):
 
     def get_meta_site_name(self):
         request = utils.get_request()
-        site = getattr(request, "site", None)
-        if request and isinstance(site, Site):
-            if bool(request.site.site_name) is True:
-                return request.site.site_name
-
-        site = self.get_site()
-        if isinstance(site, Site):
-            if bool(site.site_name) is True:
-                return site.site_name
-
         if request:
             site = Site.find_for_request(request)
             if isinstance(site, Site):
@@ -120,12 +110,9 @@ class MetadataMixin(ModelMeta):
 
     def get_domain(self):
         request = utils.get_request()
-        if request and getattr(request, "site", None):
-            return request.site.hostname
-
-        site = self.get_site()
-        if site is not None:
-            if bool(site.hostname) is True:
+        if request:
+            site = Site.find_for_request(request)
+            if isinstance(site, Site):
                 return site.hostname
 
         if not meta_settings.SITE_DOMAIN:
@@ -175,7 +162,7 @@ class MetadataPageMixin(MetadataMixin, models.Model):
         related_name="+",
     )
 
-    panels = [ImageChooserPanel("search_image")]
+    panels = [FieldPanel("search_image")]
 
     _metadata = {
         "published_time": "published_time",
@@ -205,7 +192,9 @@ class MetadataPageMixin(MetadataMixin, models.Model):
     def get_meta_image(self):
         if self.search_image is not None:
             return self.build_absolute_uri(
-                self.search_image.get_rendition(getattr(settings, "META_SEARCH_IMAGE_RENDITION", "fill-800x450")).url
+                self.search_image.get_rendition(
+                    getattr(settings, "META_SEARCH_IMAGE_RENDITION", "fill-800x450")
+                ).url
             )
         return super().get_meta_image()
 

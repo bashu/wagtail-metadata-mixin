@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "taggit",
     "modelcluster",
-    "wagtail.core",
+    "wagtail",
     "wagtail.users",
     "wagtail.images",
     "wagtail.admin",
@@ -34,7 +34,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 

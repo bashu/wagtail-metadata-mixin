@@ -2,9 +2,9 @@ from django.conf import settings
 from django.test import TestCase
 from django.utils import timezone
 from meta import settings as meta_settings
-from wagtail.core.models import Site
 from wagtail.images.models import Image
 from wagtail.images.tests.utils import get_test_image_file
+from wagtail.models import Site
 
 from wagtailmetadata.tests.models import SimplePage
 
@@ -53,7 +53,8 @@ class TestMetadataPageMixin(TestCase):
         self.page.search_image = self.image
 
         self.assertEqual(
-            self.page.get_meta_image(), self.page.build_absolute_uri(self.image.get_rendition("fill-800x450").url)
+            self.page.get_meta_image(),
+            self.page.build_absolute_uri(self.image.get_rendition("fill-800x450").url)
         )
 
     def test_get_meta_image_with_settings(self):

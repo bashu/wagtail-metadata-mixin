@@ -59,7 +59,6 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     # 'django.middleware.security.SecurityMiddleware',
-    "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
@@ -88,7 +87,12 @@ TEMPLATES = [
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
-DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": os.path.join(BASE_DIR, "db.sqlite3")}}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+    }
+}
 
 MIGRATION_MODULES = {"puput": "example.puput_migrations"}
 
@@ -134,3 +138,7 @@ PUPUT_ENTRY_MODEL = "example.abstracts.EntryAbstract"
 
 # wagtail
 WAGTAIL_SITE_NAME = "Puput Blog"
+# Using an empty string is only useful to suppress Wagtail warning for missing
+# setting. Set this to something realistic, if necessary. See
+# https://docs.wagtail.org/en/latest/reference/settings.html#wagtailadmin-base-url
+WAGTAILADMIN_BASE_URL = ''
