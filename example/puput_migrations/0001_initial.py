@@ -4,7 +4,7 @@ import django.db.models.deletion
 import modelcluster.contrib.taggit
 import modelcluster.fields
 import puput.routes
-import wagtail.core.fields
+import wagtail.fields
 from django.db import migrations, models
 
 
@@ -111,11 +111,11 @@ class Migration(migrations.Migration):
                         on_delete=models.CASCADE,
                     ),
                 ),
-                ("body", wagtail.core.fields.RichTextField(verbose_name="body")),
+                ("body", wagtail.fields.RichTextField(verbose_name="body")),
                 ("date", models.DateTimeField(default=datetime.datetime.today, verbose_name="Post date")),
                 (
                     "excerpt",
-                    wagtail.core.fields.RichTextField(
+                    wagtail.fields.RichTextField(
                         help_text="Used to display on puput pages list. If this field is not filled, a truncate version of body text will be used.",
                         verbose_name="excerpt",
                         blank=True,
