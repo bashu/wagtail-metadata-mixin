@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 from meta import settings as meta_settings
 from meta import utils
 from meta.models import ModelMeta
-from wagtail.core.models import Site
+from wagtail.models import Site
 from wagtail.images import get_image_model_string
 from wagtail.images.edit_handlers import ImageChooserPanel
 
