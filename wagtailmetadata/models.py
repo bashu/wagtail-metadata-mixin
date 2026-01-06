@@ -7,7 +7,7 @@ from meta import settings as meta_settings
 from meta import utils
 from meta.models import ModelMeta
 from wagtail.admin.panels import FieldPanel
-from wagtail.core.models import Site
+from wagtail.models import Site
 from wagtail.images import get_image_model_string
 
 
