@@ -6,9 +6,9 @@ from django.utils.translation import gettext_lazy as _
 from meta import settings as meta_settings
 from meta import utils
 from meta.models import ModelMeta
+from wagtail.admin.panels import FieldPanel
 from wagtail.models import Site
 from wagtail.images import get_image_model_string
-from wagtail.images.edit_handlers import ImageChooserPanel
 
 
 class MetadataMixin(ModelMeta):
@@ -175,7 +175,7 @@ class MetadataPageMixin(MetadataMixin, models.Model):
         related_name="+",
     )
 
-    panels = [ImageChooserPanel("search_image")]
+    panels = [FieldPanel("search_image")]
 
     _metadata = {
         "published_time": "published_time",
