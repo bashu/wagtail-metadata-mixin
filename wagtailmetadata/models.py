@@ -239,6 +239,17 @@ class MetadataPageMixin(MetadataMixin, models.Model):
         "expiration_time": "expire_at",
     }
 
+    _schema = {
+        "name": "get_meta_title",
+        "headline": "get_meta_title",
+        "description": "get_meta_description",
+        "image": "get_meta_image",
+        "url": "get_meta_url",
+        "author": "get_author_name",
+        "datePublished": "published_time",
+        "dateModified": "latest_revision_created_at",
+    }
+
     class Meta:
         abstract = True
 
