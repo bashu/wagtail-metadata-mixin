@@ -2,6 +2,7 @@ from django.conf import settings
 from django.test import TestCase
 from django.utils import timezone
 from meta import settings as meta_settings
+from wagtail.models import Site
 from wagtail.images.models import Image
 from wagtail.images.tests.utils import get_test_image_file
 from wagtail.models import Site
