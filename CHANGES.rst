@@ -1,6 +1,17 @@
 Changes
 -------
 
+3.0.1 (2026-08-15)
+~~~~~~~~~~~~~~~~~~
+
+* Added og/twitter/schemaorg title and description fields, JSON-LD toggle, and OG
+  type/app_id/profile_id/publisher/author_url fields, matching django-meta's current API.
+* Added full support for schema.org in JSON-LD format via the ``_schema`` attribute.
+* Fixed ``get_meta_image_width()``/``get_meta_image_height()`` to build off a rendition,
+  consistent with ``get_meta_image()``.
+* Fixed ``get_meta_site_name()``, ``get_domain()`` and ``build_absolute_uri()`` to no
+  longer crash silently when used on a non-``Page`` model.
+
 3.0.0 (2026-08-15)
 ~~~~~~~~~~~~~~~~~~
 
