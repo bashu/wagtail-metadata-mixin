@@ -15,6 +15,7 @@ from wagtail.models import Site
 class MetadataMixin(ModelMeta):
     context_meta_name = "meta"
 
+    og_type = None
     object_type = None
     schemaorg_type = None
     custom_namespace = None
@@ -23,23 +24,34 @@ class MetadataMixin(ModelMeta):
         "use_og": "use_og",
         "use_twitter": "use_twitter",
         "use_schemaorg": "use_schemaorg",
+        "use_json_ld": "use_json_ld",
         "use_title_tag": "use_title_tag",
         "title": "get_meta_title",
+        "og_title": "get_meta_og_title",
+        "twitter_title": "get_meta_twitter_title",
+        "schemaorg_title": "get_meta_schemaorg_title",
         "description": "get_meta_description",
+        "og_description": "get_meta_og_description",
+        "twitter_description": "get_meta_twitter_description",
+        "schemaorg_description": "get_meta_schemaorg_description",
         "keywords": "get_meta_keywords",
         "url": "get_meta_url",
         "image": "get_meta_image",
+        "image_width": "get_meta_image_width",
+        "image_height": "get_meta_image_height",
         "object_type": "get_meta_object_type",
         "site_name": "get_meta_site_name",
+        "og_type": "get_meta_og_type",
+        "og_app_id": "get_meta_og_app_id",
+        "og_profile_id": "get_meta_og_profile_id",
+        "og_publisher": "get_meta_og_publisher",
+        "og_author_url": "get_meta_og_author_url",
+        "fb_pages": get_setting("FB_PAGES"),
         "twitter_site": "get_meta_twitter_site",
         "twitter_creator": "get_meta_twitter_creator",
-        "twitter_card": "get_meta_twitter_card",
-        "og_author": "get_author_url",
-        "og_publisher": get_setting("FB_PUBLISHER"),
-        "facebook_app_id": get_setting("FB_APPID"),
-        "fb_pages": get_setting("FB_PAGES"),
-        "locale": "get_meta_locale",
+        "twitter_type": "get_meta_twitter_type",
         "schemaorg_type": "get_meta_schemaorg_type",
+        "locale": "get_meta_locale",
         "custom_namespace": "get_meta_custom_namespace",
         "get_domain": "get_domain",
     }
@@ -57,13 +69,35 @@ class MetadataMixin(ModelMeta):
         return get_setting("USE_SCHEMAORG_PROPERTIES")
 
     @property
+    def use_json_ld(self):
+        return get_setting("USE_JSON_LD_SCHEMA")
+
+    @property
     def use_title_tag(self):
         return get_setting("USE_TITLE_TAG")
 
     def get_meta_title(self):
         return False
 
+    def get_meta_og_title(self):
+        return False
+
+    def get_meta_twitter_title(self):
+        return False
+
+    def get_meta_schemaorg_title(self):
+        return False
+
     def get_meta_description(self):
+        return False
+
+    def get_meta_og_description(self):
+        return False
+
+    def get_meta_twitter_description(self):
+        return False
+
+    def get_meta_schemaorg_description(self):
         return False
 
     def get_meta_keywords(self):
@@ -77,8 +111,14 @@ class MetadataMixin(ModelMeta):
             return self.build_absolute_uri(get_setting("DEFAULT_IMAGE"))
         return None
 
+    def get_meta_image_width(self):
+        return None
+
+    def get_meta_image_height(self):
+        return None
+
     def get_meta_object_type(self):
-        return self.object_type or get_setting("SITE_TYPE")
+        return self.object_type or get_setting("DEFAULT_TYPE")
 
     def get_meta_schemaorg_type(self):
         return self.schemaorg_type or get_setting("SCHEMAORG_TYPE")
@@ -97,13 +137,28 @@ class MetadataMixin(ModelMeta):
 
         return settings.WAGTAIL_SITE_NAME
 
+    def get_meta_og_type(self):
+        return self.og_type or get_setting("FB_TYPE")
+
+    def get_meta_og_app_id(self):
+        return get_setting("FB_APPID")
+
+    def get_meta_og_profile_id(self):
+        return get_setting("FB_PROFILE_ID")
+
+    def get_meta_og_publisher(self):
+        return get_setting("FB_PUBLISHER")
+
+    def get_meta_og_author_url(self):
+        return self.get_author_url()
+
     def get_meta_twitter_site(self):
         return get_setting("TWITTER_SITE")
 
     def get_meta_twitter_creator(self):
         return self.get_author_twitter()
 
-    def get_meta_twitter_card(self):
+    def get_meta_twitter_type(self):
         if self.get_meta_image() is not None:
             return "summary_large_image"
         return "summary"
@@ -211,6 +266,22 @@ class MetadataPageMixin(MetadataMixin, models.Model):
                 ).url,
             )
         return super().get_meta_image()
+
+    def get_meta_image_width(self):
+        if self.search_image is not None:
+            rendition = self.search_image.get_rendition(
+                getattr(settings, "META_SEARCH_IMAGE_RENDITION", "fill-800x450"),
+            )
+            return rendition.width
+        return super().get_meta_image_width()
+
+    def get_meta_image_height(self):
+        if self.search_image is not None:
+            rendition = self.search_image.get_rendition(
+                getattr(settings, "META_SEARCH_IMAGE_RENDITION", "fill-800x450"),
+            )
+            return rendition.height
+        return super().get_meta_image_height()
 
     def get_author(self):
         author = super().get_author()

@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "taggit",
     "modelcluster",
+    "modelsearch",
     "wagtail",
     "wagtail.users",
     "wagtail.images",
@@ -113,12 +114,13 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 META_USE_OG_PROPERTIES = True
 META_USE_TWITTER_PROPERTIES = True
 META_USE_SCHEMAORG_PROPERTIES = True
+META_USE_JSON_LD_SCHEMA = True
 
 META_TWITTER_SITE = "@FooBlag"
 META_FB_PUBLISHER = "https://facebook.com/foo.blag"
 
 # wagtail
-WAGTAIL_SITE_NAME = "wagtail-metadata-mixin example"
+WAGTAIL_SITE_NAME = "Example Site"
 # Using an empty string is only useful to suppress Wagtail warning for missing
 # setting. Set this to something realistic, if necessary. See
 # https://docs.wagtail.org/en/latest/reference/settings.html#wagtailadmin-base-url
