@@ -276,7 +276,11 @@ class MetadataPageMixin(MetadataMixin, models.Model):
         if self.search_image is not None:
             return self.build_absolute_uri(
                 self.search_image.get_rendition(
-                    getattr(settings, "META_SEARCH_IMAGE_RENDITION", "fill-800x450"),
+                    getattr(
+                        settings,
+                        "WAGTAILMETADATA_SEARCH_IMAGE_RENDITION",
+                        "fill-800x450",
+                    ),
                 ).url,
             )
         return super().get_meta_image()
@@ -284,7 +288,11 @@ class MetadataPageMixin(MetadataMixin, models.Model):
     def get_meta_image_width(self):
         if self.search_image is not None:
             rendition = self.search_image.get_rendition(
-                getattr(settings, "META_SEARCH_IMAGE_RENDITION", "fill-800x450"),
+                getattr(
+                    settings,
+                    "WAGTAILMETADATA_SEARCH_IMAGE_RENDITION",
+                    "fill-800x450",
+                ),
             )
             return rendition.width
         return super().get_meta_image_width()
@@ -292,7 +300,11 @@ class MetadataPageMixin(MetadataMixin, models.Model):
     def get_meta_image_height(self):
         if self.search_image is not None:
             rendition = self.search_image.get_rendition(
-                getattr(settings, "META_SEARCH_IMAGE_RENDITION", "fill-800x450"),
+                getattr(
+                    settings,
+                    "WAGTAILMETADATA_SEARCH_IMAGE_RENDITION",
+                    "fill-800x450",
+                ),
             )
             return rendition.height
         return super().get_meta_image_height()
