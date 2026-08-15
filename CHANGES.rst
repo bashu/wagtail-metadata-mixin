@@ -1,8 +1,8 @@
 Changes
 -------
 
-3.0.0 (WIP)
-~~~~~~~~~~~
+3.0.0 (2026-08-15)
+~~~~~~~~~~~~~~~~~~
 
 * Bumped requirements: Wagtail 6.3+, Django 5.2/6.0/6.1, Python 3.10+, django-meta 2.5+.
 
