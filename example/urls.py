@@ -1,27 +1,21 @@
-import re
-
 from django.conf import settings
-from django.urls import include, path, re_path
+from django.contrib import admin
+from django.urls import include
+from django.urls import path
+from django.views.static import serve
 
-urlpatterns = []
+from wagtail import urls as wagtail_urls
+from wagtail.admin import urls as wagtailadmin_urls
+from wagtail.documents import urls as wagtaildocs_urls
 
-if settings.SERVE_MEDIA:
-    from django.views.static import serve
-
-    urlpatterns += [
-        re_path(
-            r"^%s(?P<path>.*)$" % re.escape(settings.STATIC_URL.lstrip("/")),
-            serve,
-            kwargs={"document_root": settings.STATIC_ROOT},
-        )
-    ]
-
-    urlpatterns += [
-        re_path(
-            r"^%s(?P<path>.*)$" % re.escape(settings.MEDIA_URL.lstrip("/")),
-            serve,
-            kwargs={"document_root": settings.MEDIA_ROOT},
-        )
-    ]
-
-urlpatterns += [path(r"", include("puput.urls"))]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("dashboard/", include(wagtailadmin_urls)),
+    path("documents/", include(wagtaildocs_urls)),
+    path(
+        "media/<path:path>",
+        serve,
+        kwargs={"document_root": settings.MEDIA_ROOT},
+    ),
+    path("", include(wagtail_urls)),
+]

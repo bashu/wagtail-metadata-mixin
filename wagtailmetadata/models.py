@@ -3,12 +3,13 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from meta import settings as meta_settings
+
 from meta import utils
 from meta.models import ModelMeta
-from wagtail.core.models import Site
+from meta.settings import get_setting
+from wagtail.admin.panels import FieldPanel
 from wagtail.images import get_image_model_string
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.models import Site
 
 
 class MetadataMixin(ModelMeta):
@@ -34,9 +35,9 @@ class MetadataMixin(ModelMeta):
         "twitter_creator": "get_meta_twitter_creator",
         "twitter_card": "get_meta_twitter_card",
         "og_author": "get_author_url",
-        "og_publisher": meta_settings.FB_PUBLISHER,
-        "facebook_app_id": meta_settings.FB_APPID,
-        "fb_pages": meta_settings.FB_PAGES,
+        "og_publisher": get_setting("FB_PUBLISHER"),
+        "facebook_app_id": get_setting("FB_APPID"),
+        "fb_pages": get_setting("FB_PAGES"),
         "locale": "get_meta_locale",
         "schemaorg_type": "get_meta_schemaorg_type",
         "custom_namespace": "get_meta_custom_namespace",
@@ -45,19 +46,19 @@ class MetadataMixin(ModelMeta):
 
     @property
     def use_og(self):
-        return meta_settings.USE_OG_PROPERTIES
+        return get_setting("USE_OG_PROPERTIES")
 
     @property
     def use_twitter(self):
-        return meta_settings.USE_TWITTER_PROPERTIES
+        return get_setting("USE_TWITTER_PROPERTIES")
 
     @property
     def use_schemaorg(self):
-        return meta_settings.USE_SCHEMAORG_PROPERTIES
+        return get_setting("USE_SCHEMAORG_PROPERTIES")
 
     @property
     def use_title_tag(self):
-        return meta_settings.USE_TITLE_TAG
+        return get_setting("USE_TITLE_TAG")
 
     def get_meta_title(self):
         return False
@@ -72,37 +73,32 @@ class MetadataMixin(ModelMeta):
         return False
 
     def get_meta_image(self):
-        if bool(meta_settings.DEFAULT_IMAGE) is True:
-            return self.build_absolute_uri(meta_settings.DEFAULT_IMAGE)
+        if bool(get_setting("DEFAULT_IMAGE")) is True:
+            return self.build_absolute_uri(get_setting("DEFAULT_IMAGE"))
         return None
 
     def get_meta_object_type(self):
-        return self.object_type or meta_settings.SITE_TYPE
+        return self.object_type or get_setting("SITE_TYPE")
 
     def get_meta_schemaorg_type(self):
-        return self.schemaorg_type or meta_settings.SCHEMAORG_TYPE
+        return self.schemaorg_type or get_setting("SCHEMAORG_TYPE")
 
     def get_meta_site_name(self):
         request = utils.get_request()
-        site = getattr(request, "site", None)
-        if request and isinstance(site, Site):
-            if bool(request.site.site_name) is True:
-                return request.site.site_name
+        if request:
+            site = Site.find_for_request(request)
+            if isinstance(site, Site):
+                return site.site_name
 
         site = self.get_site()
         if isinstance(site, Site):
             if bool(site.site_name) is True:
                 return site.site_name
 
-        if request:
-            site = Site.find_for_request(request)
-            if isinstance(site, Site):
-                return site.site_name
-
         return settings.WAGTAIL_SITE_NAME
 
     def get_meta_twitter_site(self):
-        return meta_settings.TWITTER_SITE
+        return get_setting("TWITTER_SITE")
 
     def get_meta_twitter_creator(self):
         return self.get_author_twitter()
@@ -116,27 +112,30 @@ class MetadataMixin(ModelMeta):
         return getattr(settings, "LANGUAGE_CODE", "en_US")
 
     def get_meta_custom_namespace(self):
-        return self.custom_namespace or meta_settings.OG_NAMESPACES
+        return self.custom_namespace or get_setting("OG_NAMESPACES")
 
     def get_domain(self):
         request = utils.get_request()
-        if request and getattr(request, "site", None):
-            return request.site.hostname
+        if request:
+            site = Site.find_for_request(request)
+            if isinstance(site, Site):
+                return site.hostname
 
         site = self.get_site()
-        if site is not None:
+        if isinstance(site, Site):
             if bool(site.hostname) is True:
                 return site.hostname
 
-        if not meta_settings.SITE_DOMAIN:
-            raise ImproperlyConfigured("META_SITE_DOMAIN is not set")
+        if not get_setting("SITE_DOMAIN"):
+            msg = "META_SITE_DOMAIN is not set"
+            raise ImproperlyConfigured(msg)
 
-        return meta_settings.SITE_DOMAIN
+        return get_setting("SITE_DOMAIN")
 
     def get_author(self):
         class Author:
-            fb_url = meta_settings.FB_AUTHOR_URL
-            twitter_profile = meta_settings.TWITTER_AUTHOR
+            fb_url = get_setting("FB_AUTHOR_URL")
+            twitter_profile = get_setting("TWITTER_AUTHOR")
             schemaorg_profile = None
 
             def get_full_name(self):  # pragma: no cover
@@ -154,7 +153,10 @@ class MetadataMixin(ModelMeta):
 
         site = self.get_site()
         if site is not None:
-            return "{}{}".format(site.root_url, url if url.startswith("/") else "/" + url)
+            return "{}{}".format(
+                site.root_url,
+                url if url.startswith("/") else "/" + url,
+            )
 
         raise NotImplementedError
 
@@ -165,7 +167,6 @@ class MetadataMixin(ModelMeta):
 
 
 class MetadataPageMixin(MetadataMixin, models.Model):
-
     search_image = models.ForeignKey(
         get_image_model_string(),
         verbose_name=_("search image"),
@@ -175,7 +176,7 @@ class MetadataPageMixin(MetadataMixin, models.Model):
         related_name="+",
     )
 
-    panels = [ImageChooserPanel("search_image")]
+    panels = [FieldPanel("search_image")]
 
     _metadata = {
         "published_time": "published_time",
@@ -205,7 +206,9 @@ class MetadataPageMixin(MetadataMixin, models.Model):
     def get_meta_image(self):
         if self.search_image is not None:
             return self.build_absolute_uri(
-                self.search_image.get_rendition(getattr(settings, "META_SEARCH_IMAGE_RENDITION", "fill-800x450")).url
+                self.search_image.get_rendition(
+                    getattr(settings, "META_SEARCH_IMAGE_RENDITION", "fill-800x450"),
+                ).url,
             )
         return super().get_meta_image()
 

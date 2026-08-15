@@ -1,9 +1,9 @@
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+from pathlib import Path
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# Build paths inside the project like this: BASE_DIR / ...
+BASE_DIR = Path(__file__).resolve().parent
 
-SECRET_KEY = "DUMMY_SECRET_KEY"
+SECRET_KEY = "DUMMY_SECRET_KEY"  # noqa: S105
 
 INTERNAL_IPS = []
 
@@ -20,12 +20,13 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "taggit",
     "modelcluster",
-    "wagtail.core",
+    "wagtail",
     "wagtail.users",
     "wagtail.images",
     "wagtail.admin",
     "meta",
-] + PROJECT_APPS
+    *PROJECT_APPS,
+]
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -34,14 +35,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "wagtail.core.middleware.SiteMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR, "tests", "templates")],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -50,9 +50,9 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "wagtail.contrib.settings.context_processors.settings",
-            ]
+            ],
         },
-    }
+    },
 ]
 
 ROOT_URLCONF = "wagtailmetadata.tests.urls"
@@ -68,13 +68,13 @@ DATABASES = {"default": {"ENGINE": "django.db.backends.sqlite3", "NAME": ":memor
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
-MEDIA_ROOT = os.path.join(BASE_DIR, "..", "media")
+MEDIA_ROOT = BASE_DIR / "media"
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 MEDIA_URL = "/media/"
 
-STATIC_ROOT = os.path.join(BASE_DIR, "..", "staticfiles")
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATIC_URL = "/static/"
 

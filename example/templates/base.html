@@ -1,0 +1,11 @@
+{% load meta %}<!DOCTYPE html>
+<html {% meta_namespaces_schemaorg %}>
+<head {% meta_namespaces %}>
+    <meta charset="utf-8">
+    <title>{% block title %}{{ page.title }}{% endblock %}</title>
+    {% include "meta/meta.html" %}
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>
