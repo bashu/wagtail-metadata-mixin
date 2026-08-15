@@ -130,10 +130,11 @@ class MetadataMixin(ModelMeta):
             if isinstance(site, Site):
                 return site.site_name
 
-        site = self.get_site()
-        if isinstance(site, Site):
-            if bool(site.site_name) is True:
-                return site.site_name
+        if hasattr(self, "get_site"):
+            site = self.get_site()
+            if isinstance(site, Site):
+                if bool(site.site_name) is True:
+                    return site.site_name
 
         return settings.WAGTAIL_SITE_NAME
 
@@ -176,10 +177,11 @@ class MetadataMixin(ModelMeta):
             if isinstance(site, Site):
                 return site.hostname
 
-        site = self.get_site()
-        if isinstance(site, Site):
-            if bool(site.hostname) is True:
-                return site.hostname
+        if hasattr(self, "get_site"):
+            site = self.get_site()
+            if isinstance(site, Site):
+                if bool(site.hostname) is True:
+                    return site.hostname
 
         if not get_setting("SITE_DOMAIN"):
             msg = "META_SITE_DOMAIN is not set"
@@ -206,12 +208,13 @@ class MetadataMixin(ModelMeta):
         if url.startswith("http"):
             return url
 
-        site = self.get_site()
-        if site is not None:
-            return "{}{}".format(
-                site.root_url,
-                url if url.startswith("/") else "/" + url,
-            )
+        if hasattr(self, "get_site"):
+            site = self.get_site()
+            if site is not None:
+                return "{}{}".format(
+                    site.root_url,
+                    url if url.startswith("/") else "/" + url,
+                )
 
         raise NotImplementedError
 
