@@ -3,7 +3,7 @@ from django.db.models.signals import post_init
 from django.template.defaultfilters import truncatewords
 
 
-def mixin(cls, mixins):
+def add_mixins(cls, mixins):
     for mixin in mixins:
         if mixin not in cls.__bases__:
             cls.__bases__ = (mixin,) + cls.__bases__
@@ -13,7 +13,7 @@ def mixin(cls, mixins):
 def handle_blog_model(sender, instance, **kwargs):
     from wagtailmetadata.models import MetadataMixin
 
-    sender = mixin(sender, [MetadataMixin])
+    sender = add_mixins(sender, [MetadataMixin])
 
     def get_meta_description(cls):
         return cls.search_description or truncatewords(cls.description, 20)

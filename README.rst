@@ -19,7 +19,7 @@ The current version is tested for compatiblily with the following:
 
 - Wagtail versions 2.7 to 2.15
 - Django versions 2.2 to 3.2
-- Python versions 3.6 and 3.9
+- Python versions 3.7 to 3.10
 
 Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
 `contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
@@ -74,7 +74,7 @@ Usage
 
     # models.py
 
-    from wagtail.core.models import Page, PageBase
+    from wagtail.models import Page, PageBase
 
     from wagtailmetadata.models import MetadataPageMixin
 
