@@ -20,6 +20,7 @@ classifiers = [
   "Framework :: Wagtail",
   "Framework :: Wagtail :: 6",
   "Framework :: Wagtail :: 7",
+  "Framework :: Wagtail :: 8",
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
