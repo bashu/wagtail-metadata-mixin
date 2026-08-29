@@ -17,7 +17,7 @@ OpenGraph, Twitter Card and Schema.org snippet tags for Wagtail CMS pages.
 
 The current version is tested for compatiblily with the following:
 
-- Wagtail versions 6.3 to 7.4
+- Wagtail versions 6.3 to 8.0
 - Django versions 5.2, 6.0 and 6.1
 - Python versions 3.10 to 3.14
 

@@ -4,7 +4,7 @@ requires = [ "setuptools>=61" ]
 
 [project]
 name = "wagtail-metadata-mixin"
-version = "3.0.1"
+version = "3.0.2"
 description = "OpenGraph, Twitter Card and Schema.org snippet tags for Wagtail CMS pages"
 license = "MIT"
 maintainers = [ { name = "Basil Shubin", email = "basil.shubin@gmail.com" } ]
@@ -20,6 +20,7 @@ classifiers = [
   "Framework :: Wagtail",
   "Framework :: Wagtail :: 6",
   "Framework :: Wagtail :: 7",
+  "Framework :: Wagtail :: 8",
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
@@ -45,13 +46,13 @@ urls.homepage = "https://github.com/bashu/wagtail-metadata-mixin/"
 dev = [
   "coverage==7.15.4",
   "django-stubs[compatible-mypy]==6.0.9",
-  "django-upgrade==1.31.1",
-  "mypy==2.3.0",
+  "django-upgrade==1.32.0",
+  "mypy==2.3.1",
   "pre-commit==4.6.2",
   "pytest==9.1.1",
   "pytest-django==4.14.0",
   "pytest-sugar==1.1.1",
-  "ruff==0.16.2",
+  "ruff==0.16.4",
 ]
 
 [tool.setuptools]
