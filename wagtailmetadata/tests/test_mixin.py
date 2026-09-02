@@ -1,10 +1,12 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ImproperlyConfigured
+from django.test import RequestFactory
 from django.test import TestCase
 from django.utils import timezone
 
 import pytest
+from meta import utils as meta_utils
 from wagtail.images.models import Image
 from wagtail.images.tests.utils import get_test_image_file
 from wagtail.models import Site
@@ -276,6 +278,18 @@ class MetadataPageMixinTest(TestCase):
             self.page.build_absolute_uri("http://external.example/")
             == "http://external.example/"
         )
+
+    def test_get_context(self):
+        request = RequestFactory().get("/")
+        # `meta.utils.set_request()` never resets the thread-local it sets, so
+        # make sure it doesn't leak into other tests.
+        self.addCleanup(lambda: meta_utils.set_request(None).__enter__())
+
+        context = self.page.get_context(request)
+
+        meta = context["meta"]
+        assert meta.title == self.page.title
+        assert meta.url == self.page.get_meta_url()
 
     def test_build_absolute_uri_without_site_raises(self):
         self.site.delete()
