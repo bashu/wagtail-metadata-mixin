@@ -167,6 +167,6 @@ ini_options.addopts = [ "--ds=wagtailmetadata.tests.settings", "--reuse-db", "--
 
 # ==== Coverage ====
 [tool.coverage]
+run.source = [ "wagtailmetadata" ]
 run.omit = [ "*/migrations/*", "*/tests/*" ]
 run.relative_files = true
-run.source = [ "wagtailmetadata" ]
