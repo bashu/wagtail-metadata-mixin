@@ -19,7 +19,7 @@ The current version is tested for compatiblily with the following:
 
 - Wagtail versions 6.3 to 8.0
 - Django versions 5.2, 6.0 and 6.1
-- Python versions 3.10 to 3.14
+- Python versions 3.10 to 3.15
 
 Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
 `contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
