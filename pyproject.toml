@@ -58,7 +58,7 @@ dev = [
 
 [tool.setuptools]
 packages.find.include = [ "wagtailmetadata*" ]
-packages.find.exclude = [ "example*" ]
+packages.find.exclude = [ "example*", "wagtailmetadata.tests*" ]
 include-package-data = true
 package-data.wagtailmetadata = [ "locale/**/*" ]
 dynamic.readme = { file = [ "README.rst", "CHANGES.rst" ], content-type = "text/x-rst" }
