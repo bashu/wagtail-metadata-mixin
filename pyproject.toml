@@ -4,12 +4,12 @@ requires = [ "setuptools>=61" ]
 
 [project]
 name = "wagtail-metadata-mixin"
-version = "3.0.2"
+version = "3.1.0"
 description = "OpenGraph, Twitter Card and Schema.org snippet tags for Wagtail CMS pages"
 license = "MIT"
 maintainers = [ { name = "Basil Shubin", email = "basil.shubin@gmail.com" } ]
 authors = [ { name = "Basil Shubin", email = "basil.shubin@gmail.com" } ]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Environment :: Web Environment",
@@ -25,11 +25,11 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3 :: Only",
-  "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Topic :: Internet :: WWW/HTTP",
   "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
   "Topic :: Software Development :: Libraries :: Python Modules",
@@ -44,20 +44,20 @@ urls.homepage = "https://github.com/bashu/wagtail-metadata-mixin/"
 
 [dependency-groups]
 dev = [
-  "coverage==7.15.4",
-  "django-stubs[compatible-mypy]==6.0.9",
-  "django-upgrade==1.32.0",
-  "mypy==2.3.1",
+  "coverage==7.16.2",
+  "django-stubs[compatible-mypy]==6.1.2",
+  "django-upgrade==1.33.0",
+  "mypy==2.4.0",
   "pre-commit==4.6.2",
   "pytest==9.1.1",
   "pytest-django==4.14.0",
   "pytest-sugar==1.1.1",
-  "ruff==0.16.4",
+  "ruff==0.16.10",
 ]
 
 [tool.setuptools]
 packages.find.include = [ "wagtailmetadata*" ]
-packages.find.exclude = [ "example*" ]
+packages.find.exclude = [ "example*", "wagtailmetadata.tests*" ]
 include-package-data = true
 package-data.wagtailmetadata = [ "locale/**/*" ]
 dynamic.readme = { file = [ "README.rst", "CHANGES.rst" ], content-type = "text/x-rst" }
@@ -140,7 +140,7 @@ keep_full_version = true
 # ==== mypy ====
 [tool.mypy]
 ignore_missing_imports = true
-python_version = "3.14"
+python_version = "3.15"
 check_untyped_defs = true
 warn_redundant_casts = true
 warn_unused_ignores = true
@@ -167,6 +167,6 @@ ini_options.addopts = [ "--ds=wagtailmetadata.tests.settings", "--reuse-db", "--
 
 # ==== Coverage ====
 [tool.coverage]
+run.source = [ "wagtailmetadata" ]
 run.omit = [ "*/migrations/*", "*/tests/*" ]
 run.relative_files = true
-run.source = [ "wagtailmetadata" ]
