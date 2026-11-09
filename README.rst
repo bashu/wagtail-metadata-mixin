@@ -21,7 +21,7 @@ The current version is tested for compatiblily with the following:
 - Django versions 5.2, 6.0 and 6.1
 - Python versions 3.11 to 3.15
 
-Authored by `Basil Shubin <https://github.com/bashu>`_,  and some great
+Authored by `Basil Shubin <https://github.com/bashu>`_ (who is available for freelance/contract work),  and some great
 `contributors <https://github.com/bashu/wagtail-metadata-mixin/contributors>`_.
 
 Installation
